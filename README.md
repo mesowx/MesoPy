@@ -37,6 +37,6 @@ MesoWest has come a long way and I feel that Dr. John Horel's [research group] a
 
 [requests]:https://pypi.python.org/pypi/requests/
 [jclark754@gmail.com]: mailto:jclark754@gmail.com
-[here]: http://google.com
+[here]: https://github.com/jclark754/MesoPy/blob/master/FunctionDoc.md
 [research group]: http://meso1.chpc.utah.edu/mesowest_overview/
 [Western Region]: http://www.wrh.noaa.gov/
