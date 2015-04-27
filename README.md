@@ -15,7 +15,7 @@ There are two easy ways to install MesoPy:
 Updated soon!
 
 ## Documentation
-MesoPy contains seven functions that request different types of data from the API. Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can retrieve this information from code by printing `whateverfunction.__doc__`. Alternatively, I have created a text version [here] that describes the paramters associated with each function.
+MesoPy contains seven functions that request different types of data from the API. Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can retrieve this information from code by printing `whateverfunction.__doc__`. I have created a text version [here] that describes the paramters associated with each function.
 
 ## Example Projects 
 This will be updated later. Possible projects include:

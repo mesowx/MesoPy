@@ -1,103 +1,13 @@
-#==============================================================================
-# MesoPy
-# Version: 1.00
-# Copyright (c) 2015 Joshua Clark <highparkdev@gmail.com>
-# 
-# LICENSE: 
-# Permission is hereby granted, free of charge, to any person
-# obtaining a copy of this software and associated documentation
-# files (the "Software"), to deal in the Software without
-# restriction, including without limitation the rights to use,
-# copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the
-# Software is furnished to do so, subject to the following
-# conditions:
-# 
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-# OTHER DEALINGS IN THE SOFTWARE.
-# 
-# Information on method usage can be obtained interactively by typing 
-# 'help(whatever_function)'. Alternatively, you can retrieve this information
-# from code by printing 'whatever_function.__doc__'
-#
-#==============================================================================
-
-try: 
-    import requests
-    import sys
-    
-except ImportError:
-    raise Exception("MesoPy requires the 'requests' library to work")
-
-# These should NEVER change. Ya blew it if you mess with these.     
-token = '0123456789'
-baseURL = 'http://api.mesowest.net/v2/stations/'
-
-# String values for different types of errors possible. These should be enough
-# to handle the four errors from the API and the 3 standard HTTP errors. 
-connectionError = 'Could not connect to the API. Please check your connection'
-timeoutError = 'Connection Timeout, please retry later'
-redirectError = 'Bad URL, check the formatting of your request and try again'
-resultsError = 'No results were found matching your query'
-authError = 'The token or API key is not valid, please contact' + \
-            ' Josh Clark at jclark754@gmail.com to resolve this'
-ruleError = 'This request violates a rule of the API. Please check the' + \
-            ' guidelines for formatting a data request and try again' 
-catchError = '"Something went wrong. Check all your calls and try again'
-
-#==============================================================================
-# MesoPyError class
-# Type: Exception
-# Description: This class is simply the means for error handling when an 
-#              exception is raised. Takes in the above listed error vars
-#==============================================================================
-class MesoPyError(Exception):
-    def __init__(self, errorMessage):
-        self.errorMessage = errorMessage
-    def __str__(self):
-        '''This just returns one of the above error messages'''
-        return repr(self.errorMessage)
-
-#==============================================================================
-# Methods: 
-#==============================================================================
-def checkResponse(response):
-    '''checkResponse(response)
-
-       Parameters: response
-
-       Description: Returns the data requested by the other methods assuming 
-                    the response from the API is ok. If not, provides error 
-                    handling for all possible API errors. HTTP errors are 
-                    handled in the other methods.
-    '''
-    
-    if response['SUMMARY']['RESPONSE_CODE'] == 1:
-        return response
-    elif response['SUMMARY']['RESPONSE_CODE'] == 2:
-        raise MesoPyError(resultsError)
-    elif response['SUMMARY']['RESPONSE_CODE'] == 200:
-        raise MesoPyError(authError)
-    elif response['SUMMARY']['RESPONSE_CODE'] == 400:
-        raise MesoPyError(ruleError)
-    else:
-        raise MesoPyError(catchError)
-	
-def latest_obs(token = token, **kwargs):
-    '''latest_obs(token = token, **kwargs)
-
-       Parameters: token: assigned within library
-       
-       Optional Params:
+# MesoPy Function Documentation
+MesoPy contains seven functions to retrieve data from the API. Please note, pass optional parameters into the function as string variables e.g. `MesoPy.latest_obs(state='CO', county='Larimer')` 
+### Retrieve the Latest Observations:
+    latest_obs(**kwargs):
+        Description: Returns in JSON format latest observations at a user
+                    specified location for a specified time. Other parameters
+                    may also be included (see below). See the station_list 
+                    method for station IDs.  
+                    
+         Optional Params:
            attime: Date and time in form of YYYYMMDDhhmm for which returned
                    obs are closest. All times are UTC.
                    e.g. attime=201504261800
@@ -151,37 +61,14 @@ def latest_obs(token = token, **kwargs):
            groupby: Results can be grouped by key words: state, county,
                     country, cwa, nwszone, mwsfirezone, gacc, subgacc
                     e.g. groupby=state
-                   
-        Description: Returns in JSON format latest observations at a user
-                    specified location for a specified time. Other parameters
-                    may also be included (see above). See the station_list 
-                    method for station IDs.    
-    '''
-    
-    latestString = 'nearesttime?&' + '&'.join(['%s=%s' %(key, value) \
-                   for (key, value) in kwargs.items()]) + '&token=' + token
-
-    try:     
-        resp = requests.get(baseURL + latestString)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:  
-        raise MesoPyError(connectionError)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeoutError)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirectError)
-    except requests.exceptions.RequestException as e:
-        raise e 
-        sys.exit(1)
-
-    return checkResponse(data)
-
-def precipitation_obs(token = token, **kwargs):
-    '''precipitation_obs(token = token, **kwargs)
-
-       Parameters: token: assigned within library
-       
-       Optional Params:
+### Retrieve Accumlated Precipitation Observations:
+    precipitation_obs(**kwargs)
+        Description: Returns in JSON format accumulated precipitation 
+                     observations at a user specified location for a specified 
+                     time. Other parameters may also be included (see above). 
+                     See the station_list method for station IDs. 
+                     
+        Optional Params:
            start: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE 
                   END PARAMETER. Default time is UTC
                   start=201306011800
@@ -229,33 +116,9 @@ def precipitation_obs(token = token, **kwargs):
            groupby: Results can be grouped by key words: state, county,
                     country, cwa, nwszone, mwsfirezone, gacc, subgacc
                     e.g. groupby=state
-                   
-        Description: Returns in JSON format accumulated precipitation 
-                     observations at a user specified location for a specified 
-                     time. Other parameters may also be included (see above). 
-                     See the station_list method for station IDs.    
-    '''
-    
-    precipString = 'precipitation?&' + '&'.join(['%s=%s' %(key, value) \
-                   for (key, value) in kwargs.items()]) + '&token=' + token
 
-    try:     
-        resp = requests.get(baseURL + precipString)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:  
-        raise MesoPyError(connectionError)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeoutError)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirectError)
-    except requests.exceptions.RequestException as e:
-        raise e 
-        sys.exit(1)
-
-    return checkResponse(data)
-    
-def timeseries_obs(token = token, **kwargs):
-    '''timeseries_obs(token = token, **kwargs)
+### Retrieve Observations over a Time Period:
+    timeseries_obs(**kwargs)
 
        Parameters: token: assigned within library
        
@@ -313,36 +176,14 @@ def timeseries_obs(token = token, **kwargs):
                     country, cwa, nwszone, mwsfirezone, gacc, subgacc
                     e.g. groupby=state
         
+### Retrieve a Climatology of Observations:
+    climatology_obs(**kwargs)
+
         Description: Returns in JSON a time series of observations at a user 
                      specified location for a specified time. Other parameters 
                      may also be included (see above). See the station_list 
-                     method for station IDs.    
-    '''
-    
-    timeseriesString = 'timeseries?&' + '&'.join(['%s=%s' %(key, value) \
-                   for (key, value) in kwargs.items()]) + '&token=' + token
-    
-    try: 
-        resp = requests.get(baseURL + timeseriesString)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:  
-        raise MesoPyError(connectionError)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeoutError)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirectError)
-    except requests.exceptions.RequestException as e:
-        raise e 
-        sys.exit(1)
-        
-    return checkResponse(data)
-
-def climatology_obs(token = token, **kwargs):
-    '''climatology_obs(token = token, **kwargs)
-
-       Parameters: token: assigned within library
-       
-       Optional Params:
+                     method for station IDs.           
+        Optional Params:
            startclim: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE 
                       ENDCLIM PARAMETER. Default time is UTC
                       startclim=201306011800
@@ -395,35 +236,11 @@ def climatology_obs(token = token, **kwargs):
            groupby: Results can be grouped by key words: state, county,
                     country, cwa, nwszone, mwsfirezone, gacc, subgacc
                     e.g. groupby=state
-    
-        Description: Returns in JSON a time series of observations at a user 
-                     specified location for a specified time. Other parameters 
-                     may also be included (see above). See the station_list 
-                     method for station IDs.    
-    '''
-    
-    climatologyString = 'climatology?&' + '&'.join(['%s=%s' %(key, value) \
-                   for (key, value) in kwargs.items()]) + '&token=' + token
-                        
-    try: 
-        resp = requests.get(baseURL + climatologyString)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:  
-        raise MesoPyError(connectionError)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeoutError)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirectError)
-    except requests.exceptions.RequestException as e:
-        raise e 
-        sys.exit(1)
-
-    return checkResponse(data) 
-                   
-def station_list(**kwargs):
-    '''station_list(**kwargs)
-      
-       Parameters: The user may pass in any of the below parameters as strings 
+### Retrieve a List of Stations:
+    station_list(**kwargs)
+        Description: Returns in JSON format a list of stations (and metadata) 
+                     that corresponds to user-specified parameters. 
+        Parameters: The user may pass in any of the below parameters as strings 
                    state: US state, 2-letter ID e.g. state=CO
                    county: County/parish/borough (US/Canada only), full name	
                            e.g. county=Larimer
@@ -431,7 +248,7 @@ def station_list(**kwargs):
                            e.g. radius=-120,40,20 
                    bbox: Stations within a [lon/lat] box in the order 
                          [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
-	 	       cwa: NWS county warning area (string) e.g. cwa=LOX	
+	 	           cwa: NWS county warning area (string) e.g. cwa=LOX	
                         See http://www.nws.noaa.gov/organization.php for CWA 
                         list 
                    nwsfirezone: NWS Fire Zone (string) e.g. nwsfirezone=LOX241
@@ -440,52 +257,10 @@ def station_list(**kwargs):
                          of GACC abbreviations
                    subgacc: Name of Sub GACC e.g. subgacc=EB07	
  
-        Description: Returns in JSON format a list of stations (and metadata) 
-                     that corresponds to user-specified parameters. 
-    '''
-    
-    lookupString = 'metadata?network=1,2&' + '&'.join(['%s=%s' %(key, value) \
-                   for (key, value) in kwargs.items()]) + '&token=' + token
-                       
-    try: 
-        resp = requests.get(baseURL + lookupString)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:  
-        raise MesoPyError(connectionError)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeoutError)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirectError)
-    except requests.exceptions.RequestException as e:
-        raise e 
-        sys.exit(1)
-        
-    return checkResponse(data)
-
-def variable_list():
-    '''variable_list()
-      
-       Parameters: None	
- 
+### Retrieve a List of Variables:
+    variable_list()
+     
        Description: Returns in JSON format a list of variables that could be
                     obtained from the 'vars' param in other methods. Some 
                     stations may not record all variables listed. Use the 
                     station_list method to return metadata on each station.
-    '''
-    
-    varString = 'http://api.mesowest.net/v2/variables?'+ '&token=' + token
-                       
-    try: 
-        resp = requests.get(varString)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:  
-        raise MesoPyError(connectionError)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeoutError)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirectError)
-    except requests.exceptions.RequestException as e:
-        raise e 
-        sys.exit(1)
-        
-    return checkResponse(data)
