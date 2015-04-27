@@ -11,8 +11,17 @@ There are two easy ways to install MesoPy:
 1. Run  `pip install mesopy` from a command line window
 2. Download the source folder and place `MesoPy.py` into your working directory
 
-## Example Usage
-MesoPy contains seven functions that request different types of data from the API. Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can retrieve this information from code by printing `whateverfunction.__doc__`. Alternatively, I have created a .doc [here] that describes the paramters associated with each function.
+## Usage
+Updated soon!
+
+## Documentation
+MesoPy contains seven functions that request different types of data from the API. Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can retrieve this information from code by printing `whateverfunction.__doc__`. Alternatively, I have created a text version [here] that describes the paramters associated with each function.
+
+## Example Projects 
+This will be updated later. Possible projects include:
+
+1. A GUI that displays current weather information at several stations using tkinter
+2. Plotting timeseries/climatology data using matplotlib
 
 ## Version
 1.0.0 released on 28 April 2015
