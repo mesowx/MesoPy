@@ -16,7 +16,6 @@ There are two easy ways to install MesoPy:
 You can request different types of observations by simply making a function call and passing in a few parameters:
 
 ```
-# Here we pass in stid, start, end, and units as string parameters (see docs for params)
 precip = precipitation_obs(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
 ```
 
@@ -47,15 +46,14 @@ This returns the following data in JSON format:
 You can retrieve any of the dictionary keys/values listed above by merely doing the following:
 
 ```
-# The JSON dictionary is stored in the precip variable. Let's print the total precip
-# accumulation for Fort Collins Airport.
-station = precip['STATION'][0]['STID']
+# Let's print the total precip accumulation for Fort Collins Airport.
+station = precip['STATION'][0]['STID'] # remember we stored the dictionary in the precip variable
 totalPrecip =  precip['STATION'][0]['OBSERVATIONS']['total_precip_value_1'] 
 print('The total accumulated precip at ' + station + ' was ' + str(totalPrecip) + ' in')
 ```
 Which prints:
 
-> The total accumulated precipitation at KFNL was 0.13 inches
+> The total accumulated precip at KFNL was 0.13 in
 
 #####You should note two things from the above example: 
 1. Whenever the data you're requesting returns `['STATION']`, it is necessary to specify which station (index value) in the list you will subsequently be referring to. For example if you pass in `stid=kden,kslc`, the dictionary will return a list of the two stations' relevant info. So to get to information on KDEN, you would type `['STATION'][0]` because KDEN would be first in the list of stations. Remember that `{}` specifies a dictionary and `[]` denotes a list and `[0]` is the first position in a list. You could store `precip['STATION'][0]` as a variable to reduce clutter.  
