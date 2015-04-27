@@ -17,8 +17,7 @@ You can request different types of observations by simply making a function call
 
 ```
 # Here we pass in stid, start, end, and units as string parameters (see docs for params)
-precip = precipitation_obs(stid='kfnl', start='201504261800', end='201504271200',
-units='precip|in')
+precip = precipitation_obs(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
 ```
 
 This returns the following data in JSON format:
