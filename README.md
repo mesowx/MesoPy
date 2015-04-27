@@ -22,27 +22,27 @@ precip = precipitation_obs(stid='kfnl', start='201504261800', end='201504271200'
 
 This returns the following data in JSON format:
 
-> { 'STATION': [ { 'ELEVATION': '5016',
->                         'ID': '192',
->                   'LATITUDE': '40.45',
->                  'LONGITUDE': '-105.01667',
->                    'MNET_ID': '1',
->                       'NAME': 'Fort Collins/Loveland, Fort Collins-Loveland '
->                               'Municipal Airport',
->               'OBSERVATIONS': { 'count_1': 6,
->                           'ob_end_time_1': '2015-04-27T00:55:00Z',
->                         'ob_start_time_1': '2015-04-26T18:55:00Z',
->                    'total_precip_value_1': 0.13,
->                              'vids case4': ['39', '51', '40', '52']},
->                      'STATE': 'CO',
->                     'STATUS': 'ACTIVE',
->                       'STID': 'KFNL',
->                   'TIMEZONE': 'US/Mountain'}],
->  'SUMMARY': { 'METADATA_RESPONSE_TIME': '898.586988449 ms',
->                    'NUMBER_OF_OBJECTS': 1,
->                        'RESPONSE_CODE': 1,
->                     'RESPONSE_MESSAGE': 'OK',
->                           'TOTAL_TIME': '2027.99797058 ms'}}
+  > { 'STATION': [ { 'ELEVATION': '5016',
+  >                         'ID': '192',
+  >                   'LATITUDE': '40.45',
+  >                  'LONGITUDE': '-105.01667',
+  >                    'MNET_ID': '1',
+  >                       'NAME': 'Fort Collins/Loveland, Fort Collins-Loveland '
+  >                               'Municipal Airport',
+  >               'OBSERVATIONS': { 'count_1': 6,
+  >                           'ob_end_time_1': '2015-04-27T00:55:00Z',
+  >                         'ob_start_time_1': '2015-04-26T18:55:00Z',
+  >                    'total_precip_value_1': 0.13,
+  >                              'vids case4': ['39', '51', '40', '52']},
+  >                      'STATE': 'CO',
+  >                     'STATUS': 'ACTIVE',
+  >                       'STID': 'KFNL',
+  >                   'TIMEZONE': 'US/Mountain'}],
+  >  'SUMMARY': { 'METADATA_RESPONSE_TIME': '898.586988449 ms',
+  >                    'NUMBER_OF_OBJECTS': 1,
+  >                        'RESPONSE_CODE': 1,
+  >                     'RESPONSE_MESSAGE': 'OK',
+  >                           'TOTAL_TIME': '2027.99797058 ms'}}
 
 You can retrieve any of the dictionary keys/values listed above by merely doing the following:
 
@@ -72,7 +72,6 @@ Possible projects include:
 3. Displaying precipitation data on a map using cartopy
 
 I will try to add these example projects when I get a bit more time this summer. 
->>>>>>> origin/master
 
 ## Version
 1.0.0 released on 28 April 2015
