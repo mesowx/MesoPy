@@ -3,11 +3,7 @@
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
 ## Requirements
-<<<<<<< HEAD
 MesoPy requires [requests] ( `pip install requests`) because of it's voodoo powers in making API calls for us. Currently only Python 3 is supported but I hope to fix that by the end of summer 2015. 
-=======
-MesoPy requires [requests] `pip install requests` because of it's voodoo powers in making API calls for us. 
->>>>>>> origin/master
 
 ## Installation
 There are two easy ways to install MesoPy:
@@ -74,9 +70,6 @@ Possible projects include:
 
 1. A GUI that displays current weather information at several stations using tkinter
 2. Plotting timeseries/climatology data using matplotlib
-<<<<<<< HEAD
-3. Placing precip data for several stations on a map using cartopy
-=======
 3. Displaying precipitation data on a map using cartopy
 
 I will try to add these example projects when I get a bit more time this summer. 
