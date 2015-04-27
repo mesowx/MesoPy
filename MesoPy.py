@@ -34,12 +34,13 @@
 try: 
     import requests
     import sys
+    import pprint
     
 except ImportError:
     raise Exception("MesoPy requires the 'requests' library to work")
 
 # These should NEVER change. Ya blew it if you mess with these.     
-token = '0123456789'
+token = '3428e1e281164762870915d2ae6781b4'
 baseURL = 'http://api.mesowest.net/v2/stations/'
 
 # String values for different types of errors possible. These should be enough
@@ -89,6 +90,9 @@ def checkResponse(response):
         raise MesoPyError(authError)
     elif response['SUMMARY']['RESPONSE_CODE'] == 400:
         raise MesoPyError(ruleError)
+    elif response['SUMMARY']['RESPONSE_CODE'] ==-1:
+        formatError = response['SUMMARY']['RESPONSE_MESSAGE']
+        raise MesoPyError(formatError)
     else:
         raise MesoPyError(catchError)
 	
@@ -160,9 +164,10 @@ def latest_obs(token = token, **kwargs):
     
     latestString = 'nearesttime?&' + '&'.join(['%s=%s' %(key, value) \
                    for (key, value) in kwargs.items()]) + '&token=' + token
-
+    print(latestString)
     try:     
         resp = requests.get(baseURL + latestString)
+        
         data = resp.json()
     except requests.exceptions.ConnectionError:  
         raise MesoPyError(connectionError)
@@ -343,12 +348,12 @@ def climatology_obs(token = token, **kwargs):
        Parameters: token: assigned within library
        
        Optional Params:
-           startclim: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE 
+           startclim: Start date in form of MMDDhhmm. MUST BE USED WITH THE 
                       ENDCLIM PARAMETER. Default time is UTC
-                      startclim=201306011800
-           endclim: End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE 
+                      e.g. startclim=06011800 Do not specify a year
+           endclim: End date in form of MMDDhhmm. MUST BE USED WITH THE 
                     STARTCLIM PARAMETER. Default time is UTC
-                    endclim=201306011800
+                    e.g. endclim=06011800 Do not specify a year
            recent: In lieu of a start and end date/time, return a timeseries of
                    observations for the last n minutes. e.g. latest=60
            output: Changes the output to csv or JSON format if requesting a 
@@ -404,7 +409,7 @@ def climatology_obs(token = token, **kwargs):
     
     climatologyString = 'climatology?&' + '&'.join(['%s=%s' %(key, value) \
                    for (key, value) in kwargs.items()]) + '&token=' + token
-                        
+    print(baseURL + climatologyString)            
     try: 
         resp = requests.get(baseURL + climatologyString)
         data = resp.json()
@@ -489,3 +494,28 @@ def variable_list():
         sys.exit(1)
         
     return checkResponse(data)
+
+pp = pprint.PrettyPrinter(indent=2)
+
+#stations = station_list(state='CO', county='Larimer')
+#pp.pprint(stations)
+
+#variables = variable_list()
+#pp.pprint(variables)
+
+#climate = climatology_obs(stid='kden', startclim='04260000', endclim='04270000', units='precip|in')
+#pp.pprint(climate)
+
+#latest = latest_obs(stid='kfnl', attime='201504261800', within='30')
+#pp.pprint(latest)
+
+#time = timeseries_obs(stid='kfnl', start='201504261800', end='201504262300')
+#pp.pprint(time)
+
+precip = precipitation_obs(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
+pp.pprint(precip)
+output =  precip['STATION'][0]['OBSERVATIONS']['ob_start_time_1'] 
+print(output)
+
+##var1 = Meso.latest_obs(stid='KSLC', attime='1440')
+#print(var1['SUMMARY'][0]['RESPONSE_MESSAGE'])
