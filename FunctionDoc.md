@@ -1,5 +1,5 @@
 # MesoPy Function Documentation
-MesoPy contains seven functions to retrieve data from the API. Please note, pass optional parameters into the function as string variables e.g. `MesoPy.latest_obs(state='CO', county='Larimer')` 
+MesoPy contains six functions to retrieve data from the API. Please note, pass optional parameters into the function as string variables e.g. `MesoPy.latest_obs(state='CO', county='Larimer')` 
 ### Retrieve the Latest Observations:
     latest_obs(**kwargs):
         Description: Returns in JSON format latest observations at a user
