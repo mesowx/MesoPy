@@ -3,7 +3,11 @@
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
 ## Requirements
+<<<<<<< HEAD
 MesoPy requires [requests] ( `pip install requests`) because of it's voodoo powers in making API calls for us. Currently only Python 3 is supported but I hope to fix that by the end of summer 2015. 
+=======
+MesoPy requires [requests] `pip install requests` because of it's voodoo powers in making API calls for us. 
+>>>>>>> origin/master
 
 ## Installation
 There are two easy ways to install MesoPy:
@@ -63,14 +67,20 @@ Which prints:
 2. You must cast `str()` on any `int` values (such as totalPrecip above) if you expect to concatenate a string like the example.
 
 ## Documentation
-MesoPy contains seven functions that request different types of data from the API. Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can retrieve this information from code by printing `whateverfunction.__doc__`. I have created a text version [here] that describes the paramters associated with each function.
+MesoPy contains six functions that request different types of data from the API. Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can retrieve this information from code by printing `whateverfunction.__doc__`. I have created a text version [here] that describes the parameters associated with each function.
 
 ## Example Projects 
-This will be updated later. Possible projects include:
+Possible projects include:
 
 1. A GUI that displays current weather information at several stations using tkinter
 2. Plotting timeseries/climatology data using matplotlib
+<<<<<<< HEAD
 3. Placing precip data for several stations on a map using cartopy
+=======
+3. Displaying precipitation data on a map using cartopy
+
+I will try to add these example projects when I get a bit more time this summer. 
+>>>>>>> origin/master
 
 ## Version
 1.0.0 released on 28 April 2015
@@ -86,6 +96,6 @@ MesoWest has come a long way and I feel that Dr. John Horel's [research group] a
 
 [requests]:https://pypi.python.org/pypi/requests/
 [jclark754@gmail.com]: mailto:jclark754@gmail.com
-[here]: http://google.com
+[here]: https://github.com/jclark754/MesoPy/blob/master/FunctionDoc.md
 [research group]: http://meso1.chpc.utah.edu/mesowest_overview/
 [Western Region]: http://www.wrh.noaa.gov/
