@@ -69,7 +69,7 @@ class MesoPyError(Exception):
         return repr(self.errorMessage)
 
 #==============================================================================
-# Methods: 
+# Functions: 
 #==============================================================================
 def checkResponse(response):
     '''checkResponse(response)
@@ -96,10 +96,12 @@ def checkResponse(response):
     else:
         raise MesoPyError(catchError)
 	
-def latest_obs(token = token, **kwargs):
-    '''latest_obs(token = token, **kwargs)
+def latest_obs(stid, token = token, **kwargs):
+    '''latest_obs(stid, token = token, **kwargs)
 
-       Parameters: token: assigned within library
+       Mandatory Parameters:
+           stid: Single or comma separated list of MesoWest station IDs. 
+                 e.g. stid=kden,kslc,wbb
        
        Optional Params:
            attime: Date and time in form of YYYYMMDDhhmm for which returned
@@ -119,8 +121,6 @@ def latest_obs(token = token, **kwargs):
            showemptystations: Set to '1' to show stations even if no obs exist 
                               that match the time period. Stations without obs 
                               are omitted by default.
-           stid: Single or comma separated list of MesoWest station IDs. 
-                 e.g. stid=kden,kslc,wbb
            state: US state, 2-letter ID e.g. state=CO
            country: Single or comma separated list of abbreviated 2 or 3 
                     character countries e.g. country=us,ca,mx
@@ -162,9 +162,10 @@ def latest_obs(token = token, **kwargs):
                     method for station IDs.    
     '''
     
-    latestString = 'nearesttime?&' + '&'.join(['%s=%s' %(key, value) \
+    latestString = 'nearesttime?&' + 'stid=' + stid + '&' \
+                    + '&'.join(['%s=%s' %(key, value) \
                    for (key, value) in kwargs.items()]) + '&token=' + token
-    print(latestString)
+                          
     try:     
         resp = requests.get(baseURL + latestString)
         
@@ -181,25 +182,25 @@ def latest_obs(token = token, **kwargs):
 
     return checkResponse(data)
 
-def precipitation_obs(token = token, **kwargs):
-    '''precipitation_obs(token = token, **kwargs)
+def precipitation_obs(stid, start, end, token = token, **kwargs):
+    '''precipitation_obs(stid, start, end, token = token, **kwargs)
 
-       Parameters: token: assigned within library
-       
-       Optional Params:
+       Mandatory Parameters: 
+           stid: Single or comma separated list of MesoWest station IDs. 
+                 e.g. stid=kden,kslc,wbb
            start: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE 
                   END PARAMETER. Default time is UTC
                   start=201306011800
            end: End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE 
                 START PARAMETER. Default time is UTC
                 end=201306011800
+       
+       Optional Params:
            obtimezone: Set to either UTC or local. Sets timezone of obs. 
                        Default is UTC. e.g. obtimezone=local
            showemptystations: Set to '1' to show stations even if no obs exist 
                               that match the time period. Stations without obs 
                               are omitted by default.
-           stid: Single or comma separated list of MesoWest station IDs. 
-                 e.g. stid=kden,kslc,wbb
            state: US state, 2-letter ID e.g. state=CO
            country: Single or comma separated list of abbreviated 2 or 3 
                     character countries e.g. country=us,ca,mx
@@ -241,7 +242,8 @@ def precipitation_obs(token = token, **kwargs):
                      See the station_list method for station IDs.    
     '''
     
-    precipString = 'precipitation?&' + '&'.join(['%s=%s' %(key, value) \
+    precipString = 'precipitation?' + '&stid=' + stid + '&start=' + start \
+                   + '&end=' + end + '&' + '&'.join(['%s=%s' %(key, value) \
                    for (key, value) in kwargs.items()]) + '&token=' + token
 
     try:     
@@ -259,20 +261,20 @@ def precipitation_obs(token = token, **kwargs):
 
     return checkResponse(data)
     
-def timeseries_obs(token = token, **kwargs):
-    '''timeseries_obs(token = token, **kwargs)
+def timeseries_obs(stid, start, end, token = token, **kwargs):
+    '''timeseries_obs(stid, start, end, token = token, **kwargs)
 
-       Parameters: token: assigned within library
-       
-       Optional Params:
+       Mandatory Parameters: 
+           stid: Single or comma separated list of MesoWest station IDs. 
+                 e.g. stid=kden,kslc,wbb
            start: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE 
                   END PARAMETER. Default time is UTC
                   start=201306011800
            end: End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE 
                 START PARAMETER. Default time is UTC
                 end=201306011800
-           recent: In lieu of a start and end date/time, return a timeseries of
-                   observations for the last n minutes. e.g. latest=60
+       
+       Optional Params:
            output: Changes the output to csv or JSON format if requesting a 
                    single station time series. Default is JSON unless requested
                    time series is longer than two years e.g. output=csv
@@ -281,8 +283,6 @@ def timeseries_obs(token = token, **kwargs):
            showemptystations: Set to '1' to show stations even if no obs exist 
                               that match the time period. Stations without obs 
                               are omitted by default.
-           stid: Single or comma separated list of MesoWest station IDs. 
-                 e.g. stid=kden,kslc,wbb
            state: US state, 2-letter ID e.g. state=CO
            country: Single or comma separated list of abbreviated 2 or 3 
                     character countries e.g. country=us,ca,mx
@@ -324,9 +324,10 @@ def timeseries_obs(token = token, **kwargs):
                      method for station IDs.    
     '''
     
-    timeseriesString = 'timeseries?&' + '&'.join(['%s=%s' %(key, value) \
-                   for (key, value) in kwargs.items()]) + '&token=' + token
-    
+    timeseriesString = 'timeseries?' + '&stid=' + stid + '&start=' + start \
+                   + '&end=' + end + '&' + '&'.join(['%s=%s' %(key, value) \
+                   for (key, value) in kwargs.items()]) + '&token=' + token:
+                       
     try: 
         resp = requests.get(baseURL + timeseriesString)
         data = resp.json()
@@ -342,20 +343,20 @@ def timeseries_obs(token = token, **kwargs):
         
     return checkResponse(data)
 
-def climatology_obs(token = token, **kwargs):
-    '''climatology_obs(token = token, **kwargs)
+def climatology_obs(stid, startclim, endclim, token = token, **kwargs):
+    '''climatology_obs(stid, startclim, endclim, token = token, **kwargs)
 
-       Parameters: token: assigned within library
-       
-       Optional Params:
+       Mandatory Parameters: 
+           stid: Single or comma separated list of MesoWest station IDs. 
+                 e.g. stid=kden,kslc,wbb
            startclim: Start date in form of MMDDhhmm. MUST BE USED WITH THE 
                       ENDCLIM PARAMETER. Default time is UTC
                       e.g. startclim=06011800 Do not specify a year
            endclim: End date in form of MMDDhhmm. MUST BE USED WITH THE 
                     STARTCLIM PARAMETER. Default time is UTC
-                    e.g. endclim=06011800 Do not specify a year
-           recent: In lieu of a start and end date/time, return a timeseries of
-                   observations for the last n minutes. e.g. latest=60
+                    e.g. endclim=06011800 Do not specify a year         
+       
+       Optional Params:
            output: Changes the output to csv or JSON format if requesting a 
                    single station time series. Default is JSON unless requested
                    time series is longer than two years e.g. output=csv
@@ -364,8 +365,6 @@ def climatology_obs(token = token, **kwargs):
            showemptystations: Set to '1' to show stations even if no obs exist 
                               that match the time period. Stations without obs 
                               are omitted by default.
-           stid: Single or comma separated list of MesoWest station IDs. 
-                 e.g. stid=kden,kslc,wbb
            state: US state, 2-letter ID e.g. state=CO
            country: Single or comma separated list of abbreviated 2 or 3 
                     character countries e.g. country=us,ca,mx
@@ -407,9 +406,12 @@ def climatology_obs(token = token, **kwargs):
                      method for station IDs.    
     '''
     
-    climatologyString = 'climatology?&' + '&'.join(['%s=%s' %(key, value) \
-                   for (key, value) in kwargs.items()]) + '&token=' + token
-    print(baseURL + climatologyString)            
+    climatologyString = 'climatology?' + '&stid=' + stid + '&startclim=' \
+                        + startclim + '&endclim=' + endclim + '&' \
+                        + '&'.join(['%s=%s' %(key, value) \
+                        for (key, value) in kwargs.items()]) + '&token=' \
+                        + token
+                        
     try: 
         resp = requests.get(baseURL + climatologyString)
         data = resp.json()
@@ -495,27 +497,5 @@ def variable_list():
         
     return checkResponse(data)
 
-pp = pprint.PrettyPrinter(indent=2)
 
-#stations = station_list(state='CO', county='Larimer')
-#pp.pprint(stations)
 
-#variables = variable_list()
-#pp.pprint(variables)
-
-#climate = climatology_obs(stid='kden', startclim='04260000', endclim='04270000', units='precip|in')
-#pp.pprint(climate)
-
-#latest = latest_obs(stid='kfnl', attime='201504261800', within='30')
-#pp.pprint(latest)
-
-#time = timeseries_obs(stid='kfnl', start='201504261800', end='201504262300')
-#pp.pprint(time)
-
-precip = precipitation_obs(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
-pp.pprint(precip)
-output =  precip['STATION'][0]['OBSERVATIONS']['ob_start_time_1'] 
-print(output)
-
-##var1 = Meso.latest_obs(stid='KSLC', attime='1440')
-#print(var1['SUMMARY'][0]['RESPONSE_MESSAGE'])
