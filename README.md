@@ -70,13 +70,9 @@ Possible projects include:
 
 1. A GUI that displays current weather information at several stations using tkinter
 2. Plotting timeseries/climatology data using matplotlib
-<<<<<<< HEAD
 3. Placing precip data for several stations on a map using cartopy
-=======
-3. Displaying precipitation data on a map using cartopy
 
 I will try to add these example projects when I get a bit more time this summer. 
->>>>>>> origin/master
 
 ## Version
 1.0.0 released on 28 April 2015
