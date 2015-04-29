@@ -3,11 +3,7 @@
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
 ## Requirements
-<<<<<<< HEAD
 MesoPy requires [requests] ( `pip install requests`) because of it's voodoo powers in making API calls for us. Currently only Python 3 is supported but I hope to fix that by the end of summer 2015. 
-=======
-MesoPy requires [requests] `pip install requests` because of it's voodoo powers in making API calls for us. 
->>>>>>> origin/master
 
 ## Installation
 There are two easy ways to install MesoPy:
@@ -63,7 +59,7 @@ Which prints:
 > The total accumulated precipitation at KFNL was 0.13 inches
 
 #####You should note two things from the above example: 
-1. Whenever the data you're requesting returns `['STATION']`, it is necessary to specify which station (index value) in the list you will subsequently be referring to. For example if you pass in `stid=kden,kslc`, the dictionary will return a list of the two stations' relevant info. So to get to information on KDEN, you would type `['STATION'][0]` because KDEN would be first in the list of stations. Remember that `{}` specifies a dictionary and `[]` denotes a list and `[0]` is the first position in a list. You could store `precip['STATION'][0]` as a variable to reduce clutter.  
+1. Whenever the data you're requesting returns `['STATION']`, it is necessary to specify which station (index value) in the list you will subsequently be referring to. For example if you pass in `stid='kden,kslc'`, the dictionary will return a list of the two stations' relevant info. So to get to information on KDEN, you would type `['STATION'][0]` because KDEN would be first in the list of stations. Remember that `{}` specifies a dictionary and `[]` denotes a list and `[0]` is the first position in a list. You could store `precip['STATION'][0]` as a variable to reduce clutter.  
 2. You must cast `str()` on any `int` values (such as totalPrecip above) if you expect to concatenate a string like the example.
 
 ## Documentation
