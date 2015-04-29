@@ -326,7 +326,7 @@ def timeseries_obs(stid, start, end, token = token, **kwargs):
     
     timeseriesString = 'timeseries?' + '&stid=' + stid + '&start=' + start \
                    + '&end=' + end + '&' + '&'.join(['%s=%s' %(key, value) \
-                   for (key, value) in kwargs.items()]) + '&token=' + token:
+                   for (key, value) in kwargs.items()]) + '&token=' + token
                        
     try: 
         resp = requests.get(baseURL + timeseriesString)
