@@ -70,10 +70,6 @@ Please see [here] for a list of the parameters associated with each function.
 5. `station_list()` - Retrieve a list of stations based on search parameters
 6. `variable_list()` - Retrieve a list of sensor variables possible for observing stations 
 
-#####You should note two things from the above example: 
-1. Whenever the data you're requesting returns `['STATION']`, it is necessary to specify which station (index value) in the list you will subsequently be referring to. For example if you pass in `stid='kden,kslc'`, the dictionary will return a list of the two stations' relevant info. So to get to information on KDEN, you would type `['STATION'][0]` because KDEN would be first in the list of stations. Remember that `{}` specifies a dictionary and `[]` denotes a list and `[0]` is the first position in a list. You could store `precip['STATION'][0]` as a variable to reduce clutter.  
-2. You must cast `str()` on any `int` values (such as totalPrecip above) if you expect to concatenate a string like the example.
-
 ## Documentation
 MesoPy contains six functions that request different types of data from the API. Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can also retrieve this information by printing `whateverfunction.__doc__`. I have created a text version [here] that describes the parameters associated with each function in greater detail.
 
