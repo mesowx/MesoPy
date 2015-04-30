@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: MesoPy
+Version: 1.0.1
+Summary: A pure python wrapper for the MesoWest API
+Home-page: https://github.com/jclark754/MesoPy
+Author: Josh Clark
+Author-email: jclark754@gmail.com
+License: UNKNOWN
+Download-URL: https://github.com/jclark754/MesoPy/tarball/1.0.1
+Description: UNKNOWN
+Keywords: weather,API,climate,MesoWest
+Platform: UNKNOWN
