@@ -1,6 +1,8 @@
 # MesoPy
 [![Build Status](https://travis-ci.org/jclark754/MesoPy.svg?branch=master)](https://travis-ci.org/jclark754/MesoPy)
 [![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](https://readthedocs.org/projects/mesopy/?badge=latest)
+[![Code Health](https://landscape.io/github/jclark754/MesoPy/master/landscape.svg?style=flat)](https://landscape.io/github/jclark754/MesoPy/master)
+[![Coverage Status](https://coveralls.io/repos/jclark754/MesoPy/badge.svg)](https://coveralls.io/r/jclark754/MesoPy)
 
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
