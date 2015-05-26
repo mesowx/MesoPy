@@ -1,4 +1,5 @@
 # MesoPy
+[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](https://readthedocs.org/projects/mesopy/?badge=latest)
 
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
