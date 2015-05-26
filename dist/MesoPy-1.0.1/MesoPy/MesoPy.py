@@ -33,10 +33,7 @@
 
 try: 
     import requests
-    # noinspection PyUnresolvedReferences
-    import sys
-    import pprint
-    
+
 except ImportError:
     raise Exception("MesoPy requires the 'requests' library to work")
 

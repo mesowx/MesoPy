@@ -5,7 +5,7 @@ Created on Tue Apr 28 20:31:51 2015
 @author: joshclark
 """
 
-import MesoPy as Meso
+from MesoPy import MesoPy as Meso
 import pprint 
 
 # I import Pretty Print to make the returned dictionary look, well, pretty.

@@ -1,6 +1,5 @@
 language: python
 python:
-
   - "3.2"
   - "3.3"
   - "3.4"
@@ -8,4 +7,4 @@ python:
 # command to install dependencies
 install: "pip install requests"
 # command to run tests
-script: make test
+script: "python setup.py nosetests"
