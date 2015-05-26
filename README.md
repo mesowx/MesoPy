@@ -1,6 +1,7 @@
 # MesoPy
 [![Build Status](https://travis-ci.org/jclark754/MesoPy.svg?branch=master)](https://travis-ci.org/jclark754/MesoPy)
 [![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](https://readthedocs.org/projects/mesopy/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=stable)](https://readthedocs.org/projects/mesopy/?badge=stable)
 [![Code Health](https://landscape.io/github/jclark754/MesoPy/master/landscape.svg?style=flat)](https://landscape.io/github/jclark754/MesoPy/master)
 [![Coverage Status](https://coveralls.io/repos/jclark754/MesoPy/badge.svg)](https://coveralls.io/r/jclark754/MesoPy)
 
