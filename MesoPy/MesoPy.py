@@ -27,7 +27,7 @@ except ImportError:
 
 # These should NEVER change. Ya blew it if you mess with these.     
 token = '3428e1e281164762870915d2ae6781b4'
-baseURL = 'http://api.mesowest.net/v2/stations/'
+baseURL = 'http://api.mesowest.net/v2/'
 
 # String values for different types of errors possible. These should be enough to handle the four errors from the API
 # and the 3 standard HTTP errors.
@@ -62,7 +62,7 @@ class MesoPyError(Exception):
 # ==================================================================================================================== #
 
 
-def checkresponse(response):
+def _checkresponse(response):
     """ Returns the data requested by the other methods assuming
     the response from the API is ok. If not, provides error
     handling for all possible API errors. HTTP errors are
@@ -94,6 +94,33 @@ def checkresponse(response):
         raise MesoPyError(format_error)
     else:
         raise MesoPyError(catch_error)
+
+
+def _get_json_response(endpoint, request_dict):
+    """ Returns the JSON data requested by each function
+
+    Args:
+        endpoint which is set in each function
+        request_dict which is the dict of parameters (kwargs)
+    Returns:
+        response as a JSON dict
+    Raises:
+        connection_error if no internet connection
+        timeout_error if a request takes longer than anticipated
+        redirect_error if the request is redirected too many times
+    """
+
+    try:
+        resp = requests.get(baseURL + endpoint, params=request_dict)
+        return _checkresponse(resp.json())
+    except requests.exceptions.ConnectionError:
+        raise MesoPyError(connection_error)
+    except requests.exceptions.Timeout:
+        raise MesoPyError(timeout_error)
+    except requests.exceptions.TooManyRedirects:
+        raise MesoPyError(redirect_error)
+    except requests.exceptions.RequestException as e:
+        raise e
 
 
 def latest_obs(stid, token=token, **kwargs):
@@ -140,27 +167,13 @@ def latest_obs(stid, token=token, **kwargs):
             e.g. groupby=state
     Returns:
         a dictionary of latest time observations
-    Raises:
-        connection_error if no internet connection
-        timeout_error if a request takes longer than anticipated
-        redirect_error if the request is redirected too many times
+
     """
 
-    latest_url = 'nearesttime?&' + 'stid=' + stid + '&' + '&'.join(['%s=%s' % (key, value) for (key, value) in
-                                                                    kwargs.items()]) + '&token=' + token
+    kwargs['stid'] = stid
+    kwargs['token'] = token
 
-    try:
-        resp = requests.get(baseURL + latest_url)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:
-        raise MesoPyError(connection_error)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeout_error)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirect_error)
-    except requests.exceptions.RequestException as e:
-        raise e
-    return checkresponse(data)
+    return _get_json_response('stations/nearesttime', kwargs)
 
 
 def precipitation_obs(stid, start, end, token=token, **kwargs):
@@ -204,27 +217,15 @@ def precipitation_obs(stid, start, end, token=token, **kwargs):
             e.g. groupby=state
     Returns:
         a dictionary of precipitation observations
-    Raises:
-        connection_error if no internet connection
-        timeout_error if a request takes longer than anticipated
-        redirect_error if the request is redirected too many times
+
     """
 
-    precip_url = 'precipitation?' + '&stid=' + stid + '&start=' + start + '&end=' + end + '&' + \
-                 '&'.join(['%s=%s' % (key, value) for (key, value) in kwargs.items()]) + '&token=' + token
+    kwargs['stid'] = stid
+    kwargs['start'] = start
+    kwargs['end'] = end
+    kwargs['token'] = token
 
-    try:
-        resp = requests.get(baseURL + precip_url)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:
-        raise MesoPyError(connection_error)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeout_error)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirect_error)
-    except requests.exceptions.RequestException as e:
-        raise e
-    return checkresponse(data)
+    return _get_json_response('stations/precipitation', kwargs)
 
 
 def timeseries_obs(stid, start, end, token=token, **kwargs):
@@ -270,27 +271,16 @@ def timeseries_obs(stid, start, end, token=token, **kwargs):
             e.g. groupby=state
     Returns:
         a dictionary of time series observations
-    Raises:
-        connection_error if no internet connection
-        timeout_error if a request takes longer than anticipated
-        redirect_error if the request is redirected too many times
+
     """
 
-    timeseries_url = 'timeseries?' + '&stid=' + stid + '&start=' + start + '&end=' + end + '&' + \
-                     '&'.join(['%s=%s' % (key, value) for (key, value) in kwargs.items()]) + '&token=' + token
+    kwargs['stid'] = stid
+    kwargs['start'] = start
+    kwargs['end'] = end
+    kwargs['token'] = token
 
-    try:
-        resp = requests.get(baseURL + timeseries_url)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:
-        raise MesoPyError(connection_error)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeout_error)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirect_error)
-    except requests.exceptions.RequestException as e:
-        raise e
-    return checkresponse(data)
+    return _get_json_response('stations/timeseries', kwargs)
+
 
 def climatology_obs(stid, startclim, endclim, token=token, **kwargs):
     """ Returns in JSON a time series of observations at a user specified location for a specified time. Other
@@ -333,28 +323,15 @@ def climatology_obs(stid, startclim, endclim, token=token, **kwargs):
             e.g. groupby=state
     Returns:
         a dictionary of climatology observations
-    Raises:
-        connection_error if no internet connection
-        timeout_error if a request takes longer than anticipated
-        redirect_error if the request is redirected too many times
+
     """
 
-    climatology_url = 'climatology?' + '&stid=' + stid + '&startclim=' + startclim + '&endclim=' + endclim + '&' \
-                      + '&'.join(['%s=%s' % (key, value) for (key, value) in kwargs.items()]) + '&token=' \
-                      + token
+    kwargs['stid'] = stid
+    kwargs['startclim'] = startclim
+    kwargs['endclim'] = endclim
+    kwargs['token'] = token
 
-    try:
-        resp = requests.get(baseURL + climatology_url)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:
-        raise MesoPyError(connection_error)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeout_error)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirect_error)
-    except requests.exceptions.RequestException as e:
-        raise e
-    return checkresponse(data)
+    return _get_json_response('stations/climatology', kwargs)
 
 
 def station_list(**kwargs):
@@ -373,27 +350,13 @@ def station_list(**kwargs):
         subgacc: Name of Sub GACC e.g. subgacc=EB07
     Returns:
         dictionary of requested stations
-    Raises:
-        connection_error if no internet connection
-        timeout_error if a request takes longer than anticipated
-        redirect_error if the request is redirected too many times
+
     """
 
-    station_url = 'metadata?network=1,2&' + '&'.join(['%s=%s' % (key, value) for (key, value) in kwargs.items()]) \
-                  + '&token=' + token
+    kwargs['network'] = '1,2'
+    kwargs['token'] = token
 
-    try:
-        resp = requests.get(baseURL + station_url)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:
-        raise MesoPyError(connection_error)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeout_error)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirect_error)
-    except requests.exceptions.RequestException as e:
-        raise e
-    return checkresponse(data)
+    return _get_json_response('stations/metadata', kwargs)
 
 
 def variable_list():
@@ -404,22 +367,7 @@ def variable_list():
         None
     Returns:
         dictionary of station variables
-    Raises:
-        connection_error if no internet connection
-        timeout_error if a request takes longer than anticipated
-        redirect_error if the request is redirected too many times
-    """
-    variable_url = 'http://api.mesowest.net/v2/variables?' + '&token=' + token
 
-    try:
-        resp = requests.get(variable_url)
-        data = resp.json()
-    except requests.exceptions.ConnectionError:
-        raise MesoPyError(connection_error)
-    except requests.exceptions.Timeout:
-        raise MesoPyError(timeout_error)
-    except requests.exceptions.TooManyRedirects:
-        raise MesoPyError(redirect_error)
-    except requests.exceptions.RequestException as e:
-        raise e
-    return checkresponse(data)
+    """
+
+    return _get_json_response('variables', {'token': token})
