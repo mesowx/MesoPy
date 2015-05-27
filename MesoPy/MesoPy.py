@@ -241,7 +241,7 @@ def timeseries_obs(stid, start, end, token=token, **kwargs):
         end: End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
             e.g., end=201306011800
 
-    The following paramters are OPTIONAL
+    The following parameters are OPTIONAL
         output: Changes the output to csv or JSON format if requesting a single station time series. Default is JSON
             unless requested time series is longer than two years e.g. output=csv
         obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local
@@ -291,7 +291,6 @@ def timeseries_obs(stid, start, end, token=token, **kwargs):
     except requests.exceptions.RequestException as e:
         raise e
     return checkresponse(data)
-
 
 def climatology_obs(stid, startclim, endclim, token=token, **kwargs):
     """ Returns in JSON a time series of observations at a user specified location for a specified time. Other
