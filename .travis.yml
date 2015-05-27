@@ -1,10 +1,14 @@
 language: python
 python:
-  - "3.2"
-  - "3.3"
-  - "3.4"
-  - "nightly"
+  - 2.7
+  - 3.2
+  - 3.3
+  - 3.4
+  
+before_install:
+  - pip install requests
 # command to install dependencies
-install: "pip install requests"
+install: 
+  - python setup.py install
 # command to run tests
-script: "python setup.py nosetests"
+script: nosetests MesoPy
