@@ -1,14 +1,27 @@
 language: python
+
 python:
   - 2.7
   - 3.2
   - 3.3
   - 3.4
-  
+    env: NOSE_WITH_COVERAGE=y NOSE_COVER_PACKAGE=metpy
+
 before_install:
   - pip install requests
+  - if [[ $NOSE_WITH_COVERAGE == y ]]; then
+      pip install coverage;
+    fi
+    
 # command to install dependencies
 install: 
   - python setup.py install
+  
 # command to run tests
 script: nosetests MesoPy
+
+after_success:
+  - if [[ $NOSE_WITH_COVERAGE == y ]]; then
+      pip install coveralls;
+      coveralls;
+    fi
