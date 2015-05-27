@@ -1,6 +1,2 @@
 ignore-paths:
   - examples
-
- max-line-length: 120
- pep8:
- 	full: true
