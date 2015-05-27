@@ -58,7 +58,8 @@ fig.subplots_adjust(hspace=0.6)
 plt.show()
 
 
-''' You may find some of this code useful in creating your own data'''
+# You may find some of this code useful in creating your own data
+
 # import pprint
 # pp = pprint.PrettyPrinter(indent = 2)
 # pp.pprint(climatology)
