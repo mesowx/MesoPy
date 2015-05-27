@@ -23,7 +23,7 @@ def testlatest():
 def testlateststrlist():
     latest = meso.latest_obs(stid= ['kfnl', 'kden', 'ksdf'])
     #assert len(latest['STATION'])==3
-    eq_(len(latest['STATION']), 2)
+    eq_(len(latest['STATION']), 3)
 
 
 
