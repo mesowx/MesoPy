@@ -34,6 +34,5 @@ pp.pprint(time)
 # Small example from README
 precip = Meso.precipitation_obs(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
 station = precip['STATION'][0]['STID']
-totalPrecip =  precip['STATION'][0]['OBSERVATIONS']['total_precip_value_1'] 
+totalPrecip = precip['STATION'][0]['OBSERVATIONS']['total_precip_value_1']
 print('The total accumulated precipitation at ' + station + ' was ' + str(totalPrecip) + '"')
-
