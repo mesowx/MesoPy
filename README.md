@@ -22,7 +22,7 @@ There are two easy ways to install MesoPy:
 You can request different types of observations by simply making a function call and passing in a few parameters:
 
 ```
-import MesoPy as Meso
+from MesoPy import MesoPy as Meso
 precip = Meso.precipitation_obs(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
 ```
 
@@ -66,8 +66,6 @@ Which prints:
 Whenever the data you're requesting returns `['STATION']`, it is necessary to specify which station (index value) in the list you will subsequently be referring to. For example if you pass in `stid=kden,kslc`, the dictionary will return a list of the two stations' relevant info. So to get to information on KDEN (Denver), you would type `['STATION'][0]` because KDEN would be first in the list of stations and `['STATION'][1]` for KSLC (Salt Lake City). Remember that `{}` specifies a dictionary and `[]` denotes a list and `[0]` is the first position in a list. It may be useful to store `precip['STATION'][i]` as a variable to reduce clutter. For example, `Denver_PrecipObs = precip['STATION'][0]`  and `SaltLake_PrecipObs = precip['STATION'][1]`. Then, you could write `print(Denver_PrecipObs['OBSERVATIONS']['total_precip_value_1'])` which returns `0.13` (for the above request). The API was created to always return a list (since a user can request multiple stations at any time) so this will always be a stipulation. 
 
 #### Function List:
-Please see [here] for a list of the parameters associated with each function.
-
 1. `latest_obs()` -  Get the latest observation data for a particular station(s)
 2. `precipitation_obs()` - Obtain precip totals over a specified period for a station(s)
 3. `timeseries_obs()` - Retrieve observations over a specified period for a station(s)
@@ -76,19 +74,13 @@ Please see [here] for a list of the parameters associated with each function.
 6. `variable_list()` - Retrieve a list of sensor variables possible for observing stations 
 
 ## Documentation
-MesoPy contains six functions that request different types of data from the API. Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can also retrieve this information by printing `whateverfunction.__doc__`. I have created a text version [here] that describes the parameters associated with each function in greater detail.
+Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can also retrieve this information by printing `whateverfunction.__doc__`. I have created a doc version [here] that describes the parameters associated with each function in greater detail.
 
 ## Example Projects 
-Possible projects include:
-
-1. A GUI that displays current weather information at several stations using tkinter
-2. Plotting timeseries/climatology data using matplotlib
-3. Placing precip data for several stations on a map using cartopy
-
-I will try to add these example projects when I get a bit more time this summer. 
+These can be found in the `/examples` path. I have included a simple GUI that displays weather data and a matplotlib plot which graphs temperatures at several stations.
 
 ## Version
-1.0.0 released on 28 April 2015
+1.0.1 released on 30 April 2015
 
 ## License
 MIT
@@ -101,6 +93,6 @@ MesoWest has come a long way and I feel that Dr. John Horel's [research group] a
 
 [requests]:https://pypi.python.org/pypi/requests/
 [jclark754@gmail.com]: mailto:jclark754@gmail.com
-[here]: https://github.com/jclark754/MesoPy/blob/master/FunctionDoc.md
+[here]: http://mesopy.readthedocs.org/en/latest/
 [research group]: http://meso1.chpc.utah.edu/mesowest_overview/
 [Western Region]: http://www.wrh.noaa.gov/
