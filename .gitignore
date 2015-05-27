@@ -1,0 +1,15 @@
+~*
+.DS_Store
+*.swp
+.idea/
+
+*.pyc
+
+.coverage
+examples/*.gif
+dist/*
+build/*
+*.egg-info
+MANIFEST
+__pycache__
+
