@@ -49,7 +49,7 @@ class MesoPyError(Exception):
 # ==================================================================================================================== #
 
 
-class Meso:
+class Meso():
     def __init__(self, api_token):
         """	Instantiates an instance of MesoPy. Takes parameters for authentication, errors, and baseURL.
             Args:
