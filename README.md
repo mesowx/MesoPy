@@ -2,8 +2,8 @@
 [![Build Status](https://travis-ci.org/jclark754/MesoPy.svg?branch=master)](https://travis-ci.org/jclark754/MesoPy)
 [![Coverage Status](https://coveralls.io/repos/jclark754/MesoPy/badge.svg?branch=master)](https://coveralls.io/r/jclark754/MesoPy?branch=master)
 [![Code Health](https://landscape.io/github/jclark754/MesoPy/master/landscape.svg?style=flat)](https://landscape.io/github/jclark754/MesoPy/master)
-[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](https://readthedocs.org/projects/mesopy/?badge=latest)
-[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=stable)](https://readthedocs.org/projects/mesopy/?badge=stable)
+[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](http://mesopy.readthedocs.org/en/latest/)
+
 
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
@@ -79,7 +79,7 @@ Whenever the data you're requesting returns `['STATION']`, it is necessary to sp
 ## Documentation
 Full documentation can be found by clicking the below badge:
 
-[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](https://readthedocs.org/projects/mesopy/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](http://mesopy.readthedocs.org/en/latest/)
 
 ## Example Projects 
 These can be found in the `/examples` path. I have included a simple GUI that displays weather data and a matplotlib plot which graphs temperatures at several stations.
