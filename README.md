@@ -1,9 +1,9 @@
 # MesoPy
 [![Build Status](https://travis-ci.org/jclark754/MesoPy.svg?branch=master)](https://travis-ci.org/jclark754/MesoPy)
+[![Coverage Status](https://coveralls.io/repos/jclark754/MesoPy/badge.svg?branch=master)](https://coveralls.io/r/jclark754/MesoPy?branch=master)
+[![Code Health](https://landscape.io/github/jclark754/MesoPy/master/landscape.svg?style=flat)](https://landscape.io/github/jclark754/MesoPy/master)
 [![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](https://readthedocs.org/projects/mesopy/?badge=latest)
 [![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=stable)](https://readthedocs.org/projects/mesopy/?badge=stable)
-[![Code Health](https://landscape.io/github/jclark754/MesoPy/master/landscape.svg?style=flat)](https://landscape.io/github/jclark754/MesoPy/master)
-[![Coverage Status](https://coveralls.io/repos/jclark754/MesoPy/badge.svg?branch=master)](https://coveralls.io/r/jclark754/MesoPy?branch=master)
 
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
@@ -22,8 +22,9 @@ There are two easy ways to install MesoPy:
 You can request different types of observations by simply making a function call and passing in a few parameters:
 
 ```
-from MesoPy import MesoPy as Meso
-precip = Meso.precipitation_obs(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
+from MesoPy import Meso
+m = Meso(api_token='YOUR API_TOKEN')
+precip = m.precipitation_obs(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
 ```
 
 This returns the following data as a dictionary.
@@ -80,19 +81,19 @@ Information on function usage can be obtained by typing `help(whatever_function)
 These can be found in the `/examples` path. I have included a simple GUI that displays weather data and a matplotlib plot which graphs temperatures at several stations.
 
 ## Version
-1.0.1 released on 30 April 2015
+1.1.01 released on 28 May 2015
 
 ## License
 MIT
 
 ## Support
-MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [jclark754@gmail.com].
+MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [joclark@ucar.edu].
 
 ## Credits
 MesoWest has come a long way and I feel that Dr. John Horel's [research group] at the University of Utah deserves considerable praise for their work in creating a one-stop shop for meteorological data. Additional facilities were also provided by the [Western Region] of the National Weather Service. 
 
 [requests]:https://pypi.python.org/pypi/requests/
-[jclark754@gmail.com]: mailto:jclark754@gmail.com
+[joclark@ucar.edu]: mailto:joclark@ucar.edu
 [here]: http://mesopy.readthedocs.org/en/latest/
 [research group]: http://meso1.chpc.utah.edu/mesowest_overview/
 [Western Region]: http://www.wrh.noaa.gov/
