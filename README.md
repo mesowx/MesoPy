@@ -10,6 +10,8 @@ MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.
 ## Requirements
 MesoPy requires [requests] ( `pip install requests`) because of it's voodoo powers in making API calls for us. ~~Currently only Python 3 is supported but I hope to fix that by the end of summer 2015.~~
 
+**Before using MesoPy, you will need to obtain an API key/token by contacting the MesoWest folks at [mesowestapi@gmail.com].** Be sure to provide your name, email, phone number, and a brief description on your intended use of MesoWest data. You will receive an email with an API key and a link to generate a token. Click the link and copy the token you just generated when instancing the Meso object like so: `m = Meso(api_token='YOUR API_TOKEN')`
+
 
 ## Installation
 There are two easy ways to install MesoPy:
@@ -19,7 +21,7 @@ There are two easy ways to install MesoPy:
 
 ## Usage
 #### Retrieving data:
-You can request different types of observations by simply making a function call and passing in a few parameters:
+You can request different types of observations by simply creating a Meso object and calling a function:
 
 ```
 from MesoPy import Meso
@@ -75,7 +77,9 @@ Whenever the data you're requesting returns `['STATION']`, it is necessary to sp
 6. `variable_list()` - Retrieve a list of sensor variables possible for observing stations 
 
 ## Documentation
-Information on function usage can be obtained by typing `help(whatever_function)` into the interactive interpreter. Alternatively, you can also retrieve this information by printing `whateverfunction.__doc__`. I have created a doc version [here] that describes the parameters associated with each function in greater detail.
+Full documentation can be found by clicking the below badge:
+
+[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](https://readthedocs.org/projects/mesopy/?badge=latest)
 
 ## Example Projects 
 These can be found in the `/examples` path. I have included a simple GUI that displays weather data and a matplotlib plot which graphs temperatures at several stations.
@@ -90,9 +94,10 @@ MIT
 MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [joclark@ucar.edu].
 
 ## Credits
-MesoWest has come a long way and I feel that Dr. John Horel's [research group] at the University of Utah deserves considerable praise for their work in creating a one-stop shop for meteorological data. Additional facilities were also provided by the [Western Region] of the National Weather Service. 
+MesoWest has originally created by Dr. John Horel's [research group] at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
 
 [requests]:https://pypi.python.org/pypi/requests/
+[mesowestapi@gmail.com]: mailto:mesowestapi@gmail.com
 [joclark@ucar.edu]: mailto:joclark@ucar.edu
 [here]: http://mesopy.readthedocs.org/en/latest/
 [research group]: http://meso1.chpc.utah.edu/mesowest_overview/
