@@ -1,12 +1,12 @@
 from distutils.core import setup
 setup(
   name = 'MesoPy',
-  packages = ['MesoPy'], # this must be the same as the name above
+  packages = ['MesoPy'],
   version = '1.1',
   description = 'A pure python wrapper for the MesoWest API',
   author = 'Josh Clark',
-  author_email = 'jclark754@gmail.com',
-  url = 'https://github.com/jclark754/MesoPy', # use the URL to the github repo
+  author_email = 'joclark@ucar.edu',
+  url = 'https://github.com/jclark754/MesoPy',
   download_url = 'https://github.com/jclark754/MesoPy/tarball/1.1',
   keywords = ['weather', 'API', 'climate', 'MesoWest'], 
   classifiers = [],

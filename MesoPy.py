@@ -1,8 +1,8 @@
 # ==================================================================================================================== #
 # MesoPy                                                                                                               #
-# Version: 1.0.2                                                                                                       #
-# Copyright (c) 2015 Joshua Clark <jclark754@gmail.com>                                                                #
-# #
+# Version: 1.1.01                                                                                                      #
+# Copyright (c) 2015 Joshua Clark <joclark@ucar.edu>                                                                #
+#
 # LICENSE:                                                                                                             #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated         #
 # documentation files (the "Software"), to deal in the Software without restriction, including without limitation the  #
@@ -43,7 +43,7 @@ class MesoPyError(Exception):
 
 
 # ==================================================================================================================== #
-# MesoPy class                                                                                                         #
+# Meso class                                                                                                         #
 # Type: Main                                                                                                           #
 # Description: This class defines an instance of MesoPy and takes in the user's token                                  #
 # ==================================================================================================================== #
@@ -58,7 +58,6 @@ class Meso():
 
         self.base_url = 'http://api.mesowest.net/v2/'
         self.api_token = api_token
-        # token = '3428e1e281164762870915d2ae6781b4' # for testing only
 
     # ================================================================================================================ #
     # Functions:                                                                                                       #
