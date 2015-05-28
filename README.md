@@ -8,7 +8,7 @@
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
 ## Requirements
-MesoPy requires [requests] ( `pip install requests`) because of it's voodoo powers in making API calls for us. ~~Currently only Python 3 is supported but I hope to fix that by the end of summer 2015.~~
+MesoPy requires [requests] `pip install requests` because of it's voodoo powers in making API calls for us. ~~Currently only Python 3 is supported but I hope to fix that by the end of summer 2015.~~
 
 **Before using MesoPy, you will need to obtain an API key/token by contacting the MesoWest folks at [mesowestapi@gmail.com].** Be sure to provide your name, email, phone number, and a brief description on your intended use of MesoWest data. You will receive an email with an API key and a link to generate a token. Click the link and copy the token you just generated when instancing the Meso object like so: `m = Meso(api_token='YOUR API_TOKEN')`
 
