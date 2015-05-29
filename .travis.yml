@@ -21,7 +21,7 @@ install:
   - python setup.py install
   
 # command to run tests
-script: nosetests MesoPy
+script: nosetests tests
 
 after_success:
   - if [[ $NOSE_WITH_COVERAGE == y ]]; then
