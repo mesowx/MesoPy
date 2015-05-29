@@ -3,19 +3,20 @@
 # This is a simple script for displaying data retrieved through the MesoPy package using basic matplotlib plots
 # You may use this script as boilerplate for any of your own projects
 
-from MesoPy import MesoPy as meso
+from MesoPy import Meso
 from matplotlib import pyplot as plt
 
+m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
 # Retrieving the data for y-axis and plot
-climatology = meso.timeseries_obs(stid='kfnl', start='201505010600', end='201505020600', vars='air_temp',
+climatology = m.timeseries_obs(stid='kfnl', start='201505010600', end='201505020600', vars='air_temp',
                                   units='temp|F')
 kfnl_obs = climatology['STATION'][0]['OBSERVATIONS']
 
-climatology1 = meso.timeseries_obs(stid='kgxy', start='201505010600', end='201505020600', vars='air_temp',
+climatology1 = m.timeseries_obs(stid='kgxy', start='201505010600', end='201505020600', vars='air_temp',
                                    units='temp|F')
 kgxy_obs = climatology1['STATION'][0]['OBSERVATIONS']
 
-climatology2 = meso.timeseries_obs(stid='kden', start='201505010600', end='201505020600', vars='air_temp',
+climatology2 = m.timeseries_obs(stid='kden', start='201505010600', end='201505020600', vars='air_temp',
                                    units='temp|F')
 kden_obs = climatology2['STATION'][0]['OBSERVATIONS']
 

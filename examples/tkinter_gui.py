@@ -4,7 +4,7 @@
 # uses PIL and urllib to download a few images from the web to display radar and satellite imagery
 # Feel free to use this file as needed
 
-from MesoPy import MesoPy as meso
+from MesoPy import Meso
 import urllib.request
 from tkinter import *
 from PIL import Image, ImageTk
@@ -17,8 +17,8 @@ root.title("Greeley Current Conditions")
 root.config(bg="gray10")
 
 # Retrieve observations using MesoPy and store as variable
-latestkgxy = meso.latest_obs(stid='kgxy', attime='201505010600', within='60',  units='temp|F, speed|mph')
-print(latestkgxy)
+m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
+latestkgxy = m.latest_obs(stid='kgxy', attime='201505010600', within='60',  units='temp|F, speed|mph')
 kgxy_obs = latestkgxy['STATION'][0]['OBSERVATIONS']
 
 # WIDGET LAYOUT: These are fairly obvious as I have tried to make variable names meaningful
