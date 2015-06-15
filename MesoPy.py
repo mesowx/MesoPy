@@ -148,21 +148,21 @@ class Meso(object):
         Mandatory Args:
             stid: Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb.
 
-        The following parameters are OPTIONAL
+        Optional Args:
             attime: Date and time in form of YYYYMMDDhhmm for which returned obs are closest. All times are UTC.
-                e.g. attime=201504261800
+                e.g. attime=201504261800.
             within: When used without 'attime', it can be left blank to return the latest ob or represent the number of
                 minutes which would return the latest ob within that time period. When used with 'attime' it can be a
                 single number representing a time period before attime or two comma separated numbers representing a
                 period before and after the attime e.g. attime=201306011800&within=30,30 would return the ob closest to
                 attime within a 30 minute period before or after attime.
-            obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local
+            obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local.
             showemptystations: Set to '1' to show stations even if no obs exist that match the time period. Stations
                 without obs are omitted by default.
-            state: US state, 2-letter ID e.g. state=CO
-            country: Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx
-            county: County/parish/borough (US/Canada only), full name e.g. county=Larimer
-            radius: Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=-120,40,20
+            state: US state, 2-letter ID e.g. state=CO.
+            country: Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx.
+            county: County/parish/borough (US/Canada only), full name e.g. county=Larimer.
+            radius: Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=-120,40,20.
             bbox: Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
             cwa: NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
             nwsfirezone: NWS Fire Zone (string) e.g. nwsfirezone=LOX241
