@@ -1,6 +1,7 @@
-###############
+**********
 Meso Class
-###############
+**********
 
-.. automodule:: MesoPy.Meso
+
+.. autoclass:: MesoPy.Meso
    :members:

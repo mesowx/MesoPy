@@ -1,6 +1,7 @@
-###############
+*****************
 MesoPyError Class
-###############
+*****************
 
-.. automodule:: MesoPy.MesoPyError
+
+.. autoclass:: MesoPy.MesoPyError
    :members:
