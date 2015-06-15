@@ -14,9 +14,6 @@ Contents:
    functions
    license
    
-.. automodule::
-   :members:
-
 Indices and tables
 ==================
  

@@ -1,8 +1,8 @@
 # ==================================================================================================================== #
 # MesoPy                                                                                                               #
 # Version: 1.1.01                                                                                                      #
-# Copyright (c) 2015 Joshua Clark <joclark@ucar.edu>                                                                #
-#
+# Copyright (c) 2015 Joshua Clark <joclark@ucar.edu>                                                                   #
+#                                                                                                                      #
 # LICENSE:                                                                                                             #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated         #
 # documentation files (the "Software"), to deal in the Software without restriction, including without limitation the  #
@@ -43,7 +43,7 @@ class MesoPyError(Exception):
 
 
 # ==================================================================================================================== #
-# Meso class                                                                                                         #
+# Meso class                                                                                                           #
 # Type: Main                                                                                                           #
 # Description: This class defines an instance of MesoPy and takes in the user's token                                  #
 # ==================================================================================================================== #
@@ -52,8 +52,15 @@ class MesoPyError(Exception):
 class Meso(object):
     def __init__(self, api_token):
         """	Instantiates an instance of MesoPy. Takes parameters for authentication, errors, and baseURL.
-            Args:
-                api_key: Your API key that authenticates you for requests against Authentic Jobs.
+
+        Args:
+            api_token: Your API token that authenticates you for requests against MesoWest.
+
+        Returns:
+            None.
+
+        Raises:
+            None.
         """
 
         self.base_url = 'http://api.mesowest.net/v2/'
@@ -69,16 +76,15 @@ class Meso(object):
         error handling for all possible API errors. HTTP errors are handled in the other methods.
 
         Args:
-            None
-        Returns:
-            response as a dictionary
-        Raises:
-            resultsError if response is 2
-            authError if response is 200
-            ruleError if response is 400
-            formatError if response is -1
-            catchError if response is other
+            None.
 
+        Returns:
+            The response from the API as a dictionary if the API code is 2.
+
+        Raises:
+            MesoPyError: Gives different response messages depending on returned code from API. If the response is 2,
+            resultsError is displayed. For a response of 200, an authError message is shown. A ruleError is displayed
+            if the code is 400, a formatError for -1, and catchError for any other invalid response.
         """
 
         results_error = 'No results were found matching your query'
@@ -103,17 +109,19 @@ class Meso(object):
             raise MesoPyError(catch_error)
 
     def _get_json_response(self, endpoint, request_dict):
-        """ Returns the JSON data requested by each function
+        """ Returns a Python object of data requested by each function.
 
         Args:
-            endpoint which is set in each function
-            request_dict which is the dict of parameters (kwargs)
+            endpoint: Set in all other methods, this is the API endpoint specific to each method.
+            request_dict: A dictionary of parameters that are formatted into the API call.
+
         Returns:
-            response as a JSON dict
+            response: A python object of data that has been dumped from JSON.
+
         Raises:
-            connection_error if no internet connection
-            timeout_error if a request takes longer than anticipated
-            redirect_error if the request is redirected too many times
+            MesoPyError: Overrides the exceptions given in the requests library to give more custom error messages.
+            Connection_error occurs if no internet connection exists. Timeout_error occurs if the request takes too
+            long and redirect_error is shown if the url is formatted incorrectly.
         """
         connection_error = 'Could not connect to the API. Please check your connection'
         timeout_error = 'Connection Timeout, please retry later'
@@ -121,6 +129,7 @@ class Meso(object):
 
         try:
             resp = requests.get(self.base_url + endpoint, params=request_dict)
+            print(resp)
             return self._checkresponse(resp.json())
         except requests.exceptions.ConnectionError:
             raise MesoPyError(connection_error)
@@ -133,11 +142,11 @@ class Meso(object):
 
     def latest_obs(self, stid, **kwargs):
         """ Returns in JSON format latest observations at a user specified location for a specified time. Other
-        parameters may also be included (see above). See the station_list method for station IDs.
+        parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
+        for station IDs.
 
-        Args:
-        The following parameters are MANDATORY
-            stid: Single or comma separated list of MesoWest station IDs e.g. stid=kden,kslc,wbb
+        Mandatory Args:
+            stid: Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb.
 
         The following parameters are OPTIONAL
             attime: Date and time in form of YYYYMMDDhhmm for which returned obs are closest. All times are UTC.

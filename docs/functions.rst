@@ -2,4 +2,4 @@ Function Usage
 ==============
 
 .. automodule:: MesoPy
-   :members:
+   :members: latest_obs, precipitation_obs, climatology_obs, timeseries_obs, station_list, variable_list
