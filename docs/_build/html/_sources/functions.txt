@@ -1,5 +1,13 @@
-Function Usage
-==============
+.. _api-index:
 
-.. automodule:: MesoPy
-   :members:
+###############
+MesoPy API
+###############
+
+   :Release: |version|
+   :Date: |today|
+
+.. toctree::
+   :maxdepth: 2
+	
+	meso

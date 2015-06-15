@@ -1,5 +1,13 @@
-Function Usage
-==============
+.. _api-index:
 
-.. automodule:: MesoPy
-   :members: latest_obs, precipitation_obs, climatology_obs, timeseries_obs, station_list, variable_list
+###############
+MesoPy API
+###############
+
+   :Release: |version|
+   :Date: |today|
+
+.. toctree::
+   :maxdepth: 2
+	
+	meso
