@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    installation
-   functions
+   api/api
    license
    
 Indices and tables
