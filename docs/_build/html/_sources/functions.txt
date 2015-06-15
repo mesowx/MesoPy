@@ -11,3 +11,4 @@ MesoPy API
    :maxdepth: 2
 	
 	meso
+	mesopyerror
