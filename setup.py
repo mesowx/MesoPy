@@ -9,5 +9,5 @@ setup(
   url = 'https://github.com/jclark754/MesoPy',
   download_url = 'https://github.com/jclark754/MesoPy/tarball/1.1.01',
   keywords = ['weather API climate MesoWest meteorology'],
-  classifiers = [],
+  classifiers = [], requires=['requests']
 )

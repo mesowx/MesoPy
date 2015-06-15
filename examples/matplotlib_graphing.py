@@ -1,23 +1,29 @@
-# matplotlib_graphing.py
-# Joshua Clark, 2015
-# This is a simple script for displaying data retrieved through the MesoPy package using basic matplotlib plots
-# You may use this script as boilerplate for any of your own projects
+# -*- coding: utf-8 -*-
+"""
+Created on Fri May 29 09:54:26 2015
+
+@author: joshclark
+
+This script demonstrates using matplotlib to view data obtained from MesoPy in graphs
+
+"""
 
 from MesoPy import Meso
 from matplotlib import pyplot as plt
 
 m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
+
 # Retrieving the data for y-axis and plot
 climatology = m.timeseries_obs(stid='kfnl', start='201505010600', end='201505020600', vars='air_temp',
-                                  units='temp|F')
+                               units='temp|F')
 kfnl_obs = climatology['STATION'][0]['OBSERVATIONS']
 
 climatology1 = m.timeseries_obs(stid='kgxy', start='201505010600', end='201505020600', vars='air_temp',
-                                   units='temp|F')
+                                units='temp|F')
 kgxy_obs = climatology1['STATION'][0]['OBSERVATIONS']
 
 climatology2 = m.timeseries_obs(stid='kden', start='201505010600', end='201505020600', vars='air_temp',
-                                   units='temp|F')
+                                units='temp|F')
 kden_obs = climatology2['STATION'][0]['OBSERVATIONS']
 
 # Creating a sequential list that matches the number of obs for the x-axis
@@ -59,18 +65,3 @@ fig.subplots_adjust(hspace=0.6)
 plt.show()
 
 
-# You may find some of this code useful in creating your own data
-
-# import pprint
-# pp = pprint.PrettyPrinter(indent = 2)
-# pp.pprint(climatology)
-
-# Slice only the mm:dd from the date_time strings
-# newList =[]
-# for i in kfnl_obs['date_time']:
-#     newList.append(i[11:-4])
-# list1 = [s.replace(':', '') for s in newList]
-# print(newList)
-
-# Create a new list with obs in it
-# list1 = [(i) for i in  kfnl_obs['air_temp_set_1']]

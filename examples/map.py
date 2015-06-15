@@ -29,8 +29,10 @@ def main():
     # print(findstationids)
 
     # Grab most recent temp (F) ob in last 90 min at each of the below stations
-    latest = m.latest_obs(stid='kgxy, kccu, kcos, kden, kgjt, kbdu, kpub, klhx, kspd, kdro, ksbs, keeo, kguc, klic, '
-                               'kstk, kals, ktad', within='90', vars='air_temp', units='temp|F')
+    stations = ['kgxy, kccu, kcos, kden, kgjt, kbdu, kpub, klhx, kspd, kdro, ksbs, keeo, kguc, klic, '
+                'kstk, kals, ktad']
+    latest = m.latest_obs(stid=stations, within='90', vars='air_temp', units='temp|F')
+    print(latest)
 
     # create a list to store everything, iterate over the number of objs returned in latest and append
     # lat, long, temp, and stid for use later

@@ -12,7 +12,7 @@ from PIL import Image, ImageTk
 
 # APP CREATION: The basics to generate the app window
 root = Tk()
-root.geometry('1800x1000+0+0')
+root.geometry('1820x1080+0+0')
 root.title("Greeley Current Conditions")
 root.config(bg="gray10")
 

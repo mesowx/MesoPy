@@ -3,8 +3,10 @@
 Created on Tue Apr 28 20:31:51 2015
 
 @author: joshclark
-"""
 
+This script just demonstrates some example usage for each function
+
+"""
 from MesoPy import Meso
 import pprint 
 
