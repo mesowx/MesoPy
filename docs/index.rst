@@ -13,12 +13,7 @@ Contents:
    installation
    functions
    license
-.. automodule:: MesoPy
-.. autoclass:: Meso
-    :members:
 
-
-   	
 Indices and tables
 ==================
  
