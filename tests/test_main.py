@@ -1,5 +1,5 @@
-from MesoPy import Meso
-from nose.tools import eq_, ok_
+from MesoPy import Meso, MesoPyError
+from nose.tools import *
 
 
 # Basic Function Tests
@@ -44,6 +44,17 @@ def testlateststrlist():
     m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
     latest = m.latest_obs(stid=['kfnl', 'kden', 'ksdf'])
     eq_(len(latest['STATION']), 3)
+
+
+# Error Handling
+
+#Request string format error
+@raises(MesoPyError)
+def testbadurlstring():
+    m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
+    latest = m.latest_obs(stid='')
+    print(latest)
+
 
 # def testconverter():
 #     m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
