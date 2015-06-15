@@ -82,19 +82,13 @@ Full documentation can be found by clicking the below badge:
 [![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](http://mesopy.readthedocs.org/en/latest/)
 
 ## Example Projects 
-These can be found in the `/examples` path. I have included a simple GUI that displays weather data and a matplotlib plot which graphs temperatures at several stations.
+These can be found in the `/examples` path.
 
-## Version
-1.1.01 released on 28 May 2015
+## Version and License
+1.1.01 released on 28 May 2015 under the MIT license
 
-## License
-MIT
-
-## Support
-MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [joclark@ucar.edu].
-
-## Credits
-MesoWest has originally created by Dr. John Horel's [research group] at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
+## Support and Credits
+MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [joclark@ucar.edu]. MesoWest has originally created by Dr. John Horel's [research group] at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
 
 [requests]:https://pypi.python.org/pypi/requests/
 [mesowestapi@gmail.com]: mailto:mesowestapi@gmail.com
