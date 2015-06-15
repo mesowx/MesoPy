@@ -180,9 +180,12 @@ class Meso(object):
                 alti|pa, alti|inhg. e.g. units=temp|F,speed|kph,metric
             groupby: Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc,
                 subgacc e.g. groupby=state
-        Returns:
-            a dictionary of latest time observations
 
+        Returns:
+            Dictionary of the latest time observations through the get_json_response method.
+
+        Raises:
+            None.
         """
 
         kwargs['stid'] = stid
@@ -192,17 +195,17 @@ class Meso(object):
 
     def precipitation_obs(self, stid, start, end, **kwargs):
         """ Returns in JSON a time series of observations at a user specified location for a specified time. Other
-        parameters may also be included (see above). See the station_list method for station IDs.
+        parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
+        for station IDs.
 
-        Args:
-        The following parameters are MANDATORY
+        Mandatory Args:
             stid: Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
             start: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
                 e.g., start=201306011800
             end: End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
                 e.g., end=201306011800
 
-        The following parameters are OPTIONAL
+        Optional Args:
             obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local
             showemptystations: Set to '1' to show stations even if no obs exist that match the time period. Stations
                 without obs are omitted by default.
@@ -226,10 +229,13 @@ class Meso(object):
                 speed|mph, speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in;
                 alti|pa, alti|inhg. e.g. units=temp|F,speed|kph,metric
             groupby: Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc,
-                subgacc e.g. groupby=state
-        Returns:
-            a dictionary of precipitation observations
+                subgacc e.g. groupby=state.
 
+        Returns:
+            Dictionary of precipitation observations through the get_json_response method.
+
+        Raises:
+            None.
         """
 
         kwargs['stid'] = stid
@@ -240,22 +246,18 @@ class Meso(object):
         return self._get_json_response('stations/precipitation', kwargs)
 
     def timeseries_obs(self, stid, start, end, **kwargs):
-        """ Returns in JSON a time series of observations at a user
-        specified location for a specified time. Other parameters
-        may also be included (see above). See the station_list
-        method for station IDs.
+        """ Returns in JSON a time series of observations at a user specified location for a specified time. Other
+        parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
+        for station IDs.
 
-        Args:
-        The following parameters are MANDATORY
+        Mandatory Args:
             stid: Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
             start: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
                 e.g., start=201306011800
             end: End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
                 e.g., end=201306011800
 
-        The following parameters are OPTIONAL
-            output: Changes the output to csv or JSON format if requesting a single station time series. Default is JSON
-                unless requested time series is longer than two years e.g. output=csv
+        Optional Args:
             obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local
             showemptystations: Set to '1' to show stations even if no obs exist that match the time period. Stations
                 without obs are omitted by default.
@@ -280,8 +282,12 @@ class Meso(object):
                 alti|pa, alti|inhg. e.g. units=temp|F,speed|kph,metric
             groupby: Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc,
                 subgacc e.g. groupby=state
+
         Returns:
-            a dictionary of time series observations
+            Dictionary of time series observations through the get_json_response method.
+
+        Raises:
+            None.
 
         """
 
@@ -294,19 +300,17 @@ class Meso(object):
 
     def climatology_obs(self, stid, startclim, endclim, **kwargs):
         """ Returns in JSON a time series of observations at a user specified location for a specified time. Other
-        parameters may also be included (see above). See the station_list method for station IDs.
+        parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
+        for station IDs.
 
-        Args:
-        The following parameters are MANDATORY
+        Mandatory Args:
             stid: Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
             startclim: Start date in form of MMDDhhmm. MUST BE USED WITH THE ENDCLIM PARAMETER. Default time is UTC
                 e.g. startclim=06011800 Do not specify a year
             endclim: End date in form of MMDDhhmm. MUST BE USED WITH THE STARTCLIM PARAMETER. Default time is UTC
                 e.g. endclim=06011800 Do not specify a year
 
-        The following parameters are OPTIONAL
-            output: Changes the output to csv or JSON format if requesting a single station time series. Default is JSON
-                unless requested time series is longer than two years e.g. output=csv
+        Optional Args:
             obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local
             showemptystations: Set to '1' to show stations even if no obs exist that match the time period. Stations
                 without obs are omitted by default.
@@ -331,9 +335,12 @@ class Meso(object):
                 alti|pa, alti|inhg. e.g. units=temp|F,speed|kph,metric
             groupby: Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc,
                 subgacc e.g. groupby=state
-        Returns:
-            a dictionary of climatology observations
 
+        Returns:
+            Dictionary of climatology observations through the get_json_response method.
+
+        Raises:
+            None.
         """
 
         kwargs['stid'] = stid
@@ -347,7 +354,6 @@ class Meso(object):
         """ Returns in JSON format a list of stations (and metadata)that corresponds to user-specified parameters.
 
         Args:
-        The user may pass in any of the below parameters as string arguments
             state: US state, 2-letter ID e.g. state=CO
             county: County/parish/borough (US/Canada only), full name e.g. county=Larimer
             radius: Distance from a lat/lon pt as [lat,lon,radius (mi)] e.g. radius=-120,40,20
@@ -357,9 +363,12 @@ class Meso(object):
             gacc: Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of
                 GACC abbreviations
             subgacc: Name of Sub GACC e.g. subgacc=EB07
-        Returns:
-            dictionary of requested stations
 
+        Returns:
+            Dictionary of stations through the get_json_response method.
+
+        Raises:
+            None.
         """
 
         kwargs['network'] = '1,2'
@@ -368,14 +377,18 @@ class Meso(object):
         return self._get_json_response('stations/metadata', kwargs)
 
     def variable_list(self):
-        """ Returns in JSON format a list of variables that could be obtained from the 'vars' param in other functions. Some
-        stations may not record all variables listed. Use the station_list function to return metadata on each station.
+        """ Returns in JSON format a list of variables that could be obtained from the 'vars' param in other functions.
+        Some stations may not record all variables listed. Use the station_list function to return metadata on each
+        station.
 
         Args:
             None
-        Returns:
-            dictionary of station variables
 
+        Returns:
+            Dictionary of variables through the get_json_response method.
+
+        Raises:
+            None.
         """
 
         return self._get_json_response('variables', {'token': self.api_token})
