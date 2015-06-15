@@ -10,9 +10,19 @@ Contents:
 
 .. toctree::
    :maxdepth: 3
-
    installation
    functions
    license
+.. automodule:: MesoPy
+.. autoclass:: Meso
+    :members:
+
+
    	
+Indices and tables
+==================
+ 
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
