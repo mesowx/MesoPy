@@ -59,12 +59,10 @@ class Meso(object):
             Your API token that authenticates you for requests against MesoWest.
 
         Returns:
-        --------
-        None.
+            None.
 
         Raises:
-        -------
-        None.
+            None.
         """
 
         self.base_url = 'http://api.mesowest.net/v2/'
@@ -80,6 +78,7 @@ class Meso(object):
         error handling for all possible API errors. HTTP errors are handled in the other methods.
 
         Arguments:
+        ----------
             None.
 
         Returns:
@@ -115,9 +114,12 @@ class Meso(object):
     def _get_json_response(self, endpoint, request_dict):
         """ Returns a Python object of data requested by each function.
 
-        Args:
-            endpoint: Set in all other methods, this is the API endpoint specific to each method.
-            request_dict: A dictionary of parameters that are formatted into the API call.
+        Arguments:
+        ----------
+        endpoint: string, mandatory
+            Set in all other methods, this is the API endpoint specific to each method.
+        request_dict: string, mandatory
+            A dictionary of parameters that are formatted into the API call.
 
         Returns:
             response: A python object of data that has been dumped from JSON.
@@ -202,12 +204,10 @@ class Meso(object):
             e.g. groupby=state
 
         Returns:
-        --------
-        Dictionary of the latest time observations through the get_json_response method.
+            Dictionary of the latest time observations through the get_json_response method.
 
         Raises:
-        -------
-        None.
+            None.
         """
 
         kwargs['stid'] = stid
@@ -216,42 +216,58 @@ class Meso(object):
         return self._get_json_response('stations/nearesttime', kwargs)
 
     def precipitation_obs(self, stid, start, end, **kwargs):
-        """ Returns in JSON a time series of observations at a user specified location for a specified time. Other
+        r""" Returns in JSON a time series of observations at a user specified location for a specified time. Other
         parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
         for station IDs.
 
-        Mandatory Args:
-            stid: Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
-            start: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
-                e.g., start=201306011800
-            end: End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
-                e.g., end=201306011800
-
-        Optional Args:
-            obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local
-            showemptystations: Set to '1' to show stations even if no obs exist that match the time period. Stations
-                without obs are omitted by default.
-            state: US state, 2-letter ID e.g. state=CO
-            country: Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx
-            county: County/parish/borough (US/Canada only), full name e.g. county=Larimer
-            radius: Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=-120,40,20
-            bbox: Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
-            cwa: NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
-            nwsfirezone: NWS Fire Zone (string) e.g. nwsfirezone=LOX241
-            gacc: Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of
-                GACC abbreviations
-            subgacc: Name of Sub GACC e.g. subgacc=EB07
-            vars: single or comma separatd list of sensor variables. Will return all stations that match one of provided
-                variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
-                the query. e.g. vars=wind_speed,pressure Use the variables method to see a list of sensor vars
-            status: A value of either active or inactive returns stations currently set as active or inactive in the
-                archive. Omitting this param returns all stations e.g. status=active
-            units: string or set of strings and by pipes separated by commas. Default is metric units. Set units=ENGLISH
-                for FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps,
-                speed|mph, speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in;
-                alti|pa, alti|inhg. e.g. units=temp|F,speed|kph,metric
-            groupby: Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc,
-                subgacc e.g. groupby=state.
+        Arguments:
+        ----------
+        stid: string, mandatory
+            Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
+        start: string, mandatory
+            Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
+            e.g., start=201306011800
+        end: string, mandatory
+            End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
+            e.g., end=201306011800
+        obtimezone: string, optional
+            Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local.
+        showemptystations: string, optional
+            Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
+            omitted by default.
+        state: string, optional
+            US state, 2-letter ID e.g. state=CO.
+        country: string, optional
+            Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx
+        county: string, optional
+            County/parish/borough (US/Canada only), full name e.g. county=Larimer
+        radius: string, optional
+            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=-120,40,20
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
+        cwa: string, optional
+            NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
+        nwsfirezone: string, optional
+            NWS Fire Zone (string) e.g. nwsfirezone=LOX241
+        gacc: string, optional
+            Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of GACCs.
+        subgacc: string, optional
+            Name of Sub GACC e.g. subgacc=EB07
+        vars: string, optional
+            Single or comma separatd list of sensor variables. Will return all stations that match one of provided
+            variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
+            the query. e.g. vars=wind_speed,pressure Use the variables method to see a list of sensor vars.
+        status: string, optional
+            A value of either active or inactive returns stations currently set as active or inactive in the archive.
+            Omitting this param returns all stations. e.g. status=active
+        units: string, optional
+            String or set of strings and pipes separated by commas. Default is metric units. Set units=ENGLISH for
+            FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
+            speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
+            alti|inhg. e.g. units=temp|F,speed|kph,metric
+        groupby: string, optional
+            Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
+            e.g. groupby=state
 
         Returns:
             Dictionary of precipitation observations through the get_json_response method.
@@ -268,49 +284,64 @@ class Meso(object):
         return self._get_json_response('stations/precipitation', kwargs)
 
     def timeseries_obs(self, stid, start, end, **kwargs):
-        """ Returns in JSON a time series of observations at a user specified location for a specified time. Other
+        r""" Returns in JSON a time series of observations at a user specified location for a specified time. Other
         parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
         for station IDs.
 
-        Mandatory Args:
-            stid: Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
-            start: Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
-                e.g., start=201306011800
-            end: End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
-                e.g., end=201306011800
-
-        Optional Args:
-            obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local
-            showemptystations: Set to '1' to show stations even if no obs exist that match the time period. Stations
-                without obs are omitted by default.
-            state: US state, 2-letter ID e.g. state=CO
-            country: Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx
-            county: County/parish/borough (US/Canada only), full name e.g. county=Larimer
-            radius: Distance from a lat/lon pt as [lat,lon,radius (mi)] e.g. radius=-120,40,20
-            bbox: Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
-            cwa: NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
-            nwsfirezone: NWS Fire Zone (string) e.g. nwsfirezone=LOX241
-            gacc: Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of
-                GACC abbreviations
-            subgacc: Name of Sub GACC e.g. subgacc=EB07
-            vars: single or comma separated list of sensor variables. Will return all stations that match one of
-                provided variables. Useful for filtering all stations that sense only certain vars. Do not request vars
-                twice in the query. e.g. vars=wind_speed,pressure Use the variables method to see a list of sensor vars
-            status: A value of either active or inactive returns stations currently set as active or inactive in the
-                archive Omitting this param returns all stations e.g. status=active
-            units: string or set of strings and by pipes separated by commas. Default is metric units. Set units=ENGLISH
-                for FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps,
-                speed|mph, speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in;
-                alti|pa, alti|inhg. e.g. units=temp|F,speed|kph,metric
-            groupby: Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc,
-                subgacc e.g. groupby=state
+        Arguments:
+        ----------
+        stid: string, mandatory
+            Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
+        start: string, mandatory
+            Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
+            e.g., start=201306011800
+        end: string, mandatory
+            End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
+            e.g., end=201306011800
+        obtimezone: string, optional
+            Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local.
+        showemptystations: string, optional
+            Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
+            omitted by default.
+        state: string, optional
+            US state, 2-letter ID e.g. state=CO.
+        country: string, optional
+            Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx
+        county: string, optional
+            County/parish/borough (US/Canada only), full name e.g. county=Larimer
+        radius: string, optional
+            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=-120,40,20
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
+        cwa: string, optional
+            NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
+        nwsfirezone: string, optional
+            NWS Fire Zone (string) e.g. nwsfirezone=LOX241
+        gacc: string, optional
+            Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of GACCs.
+        subgacc: string, optional
+            Name of Sub GACC e.g. subgacc=EB07
+        vars: string, optional
+            Single or comma separatd list of sensor variables. Will return all stations that match one of provided
+            variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
+            the query. e.g. vars=wind_speed,pressure Use the variables method to see a list of sensor vars.
+        status: string, optional
+            A value of either active or inactive returns stations currently set as active or inactive in the archive.
+            Omitting this param returns all stations. e.g. status=active
+        units: string, optional
+            String or set of strings and pipes separated by commas. Default is metric units. Set units=ENGLISH for
+            FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
+            speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
+            alti|inhg. e.g. units=temp|F,speed|kph,metric
+        groupby: string, optional
+            Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
+            e.g. groupby=state
 
         Returns:
             Dictionary of time series observations through the get_json_response method.
 
         Raises:
             None.
-
         """
 
         kwargs['stid'] = stid
@@ -321,42 +352,58 @@ class Meso(object):
         return self._get_json_response('stations/timeseries', kwargs)
 
     def climatology_obs(self, stid, startclim, endclim, **kwargs):
-        """ Returns in JSON a time series of observations at a user specified location for a specified time. Other
+        r""" Returns in JSON a time series of observations at a user specified location for a specified time. Other
         parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
         for station IDs.
 
-        Mandatory Args:
-            stid: Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
-            startclim: Start date in form of MMDDhhmm. MUST BE USED WITH THE ENDCLIM PARAMETER. Default time is UTC
-                e.g. startclim=06011800 Do not specify a year
-            endclim: End date in form of MMDDhhmm. MUST BE USED WITH THE STARTCLIM PARAMETER. Default time is UTC
-                e.g. endclim=06011800 Do not specify a year
-
-        Optional Args:
-            obtimezone: Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local
-            showemptystations: Set to '1' to show stations even if no obs exist that match the time period. Stations
-                without obs are omitted by default.
-            state: US state, 2-letter ID e.g. state=CO
-            country: Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx
-            county: County/parish/borough (US/Canada only), full name e.g. county=Larimer
-            radius: Distance from a lat/lon pt as [lat,lon,radius (mi)] e.g. radius=-120,40,20
-            bbox: Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
-            cwa: NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
-            nwsfirezone: NWS Fire Zone (string) e.g. nwsfirezone=LOX241
-            gacc: Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of
-                GACC abbreviations
-            subgacc: Name of Sub GACC e.g. subgacc=EB07
-            vars: single or comma separated list of sensor variables. Will return all stations that match one of
-                provided variables. Useful for filtering all stations that sense only certain vars. Do not request vars
-                twice in the query. e.g. vars=wind_speed,pressure Use the variables method to see a list of sensor vars
-            status: A value of either active or inactive returns stations currently set as active or inactive in the
-                archive. Omitting this param returns all stations e.g. status=active
-            units: string or set of strings and by pipes separated by commas. Default is metric units. Set units=ENGLISH
-                for FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps,
-                speed|mph, speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in;
-                alti|pa, alti|inhg. e.g. units=temp|F,speed|kph,metric
-            groupby: Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc,
-                subgacc e.g. groupby=state
+        Arguments:
+        ----------
+        stid: string, mandatory
+            Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
+        startclim: string, mandatory
+            Start date in form of MMDDhhmm. MUST BE USED WITH THE ENDCLIM PARAMETER. Default time is UTC
+            e.g. startclim=06011800 Do not specify a year
+        endclim: string, mandatory
+            End date in form of MMDDhhmm. MUST BE USED WITH THE STARTCLIM PARAMETER. Default time is UTC
+            e.g. endclim=06011800 Do not specify a year
+        obtimezone: string, optional
+            Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local.
+        showemptystations: string, optional
+            Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
+            omitted by default.
+        state: string, optional
+            US state, 2-letter ID e.g. state=CO.
+        country: string, optional
+            Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx
+        county: string, optional
+            County/parish/borough (US/Canada only), full name e.g. county=Larimer
+        radius: string, optional
+            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=-120,40,20
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
+        cwa: string, optional
+            NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
+        nwsfirezone: string, optional
+            NWS Fire Zone (string) e.g. nwsfirezone=LOX241
+        gacc: string, optional
+            Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of GACCs.
+        subgacc: string, optional
+            Name of Sub GACC e.g. subgacc=EB07
+        vars: string, optional
+            Single or comma separatd list of sensor variables. Will return all stations that match one of provided
+            variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
+            the query. e.g. vars=wind_speed,pressure Use the variables method to see a list of sensor vars.
+        status: string, optional
+            A value of either active or inactive returns stations currently set as active or inactive in the archive.
+            Omitting this param returns all stations. e.g. status=active
+        units: string, optional
+            String or set of strings and pipes separated by commas. Default is metric units. Set units=ENGLISH for
+            FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
+            speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
+            alti|inhg. e.g. units=temp|F,speed|kph,metric
+        groupby: string, optional
+            Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
+            e.g. groupby=state
 
         Returns:
             Dictionary of climatology observations through the get_json_response method.
@@ -375,16 +422,25 @@ class Meso(object):
     def station_list(self, **kwargs):
         """ Returns in JSON format a list of stations (and metadata)that corresponds to user-specified parameters.
 
-        Args:
-            state: US state, 2-letter ID e.g. state=CO
-            county: County/parish/borough (US/Canada only), full name e.g. county=Larimer
-            radius: Distance from a lat/lon pt as [lat,lon,radius (mi)] e.g. radius=-120,40,20
-            bbox: Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
-            cwa: NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
-            nwsfirezone: NWS Fire Zone (string) e.g. nwsfirezone=LOX241
-            gacc: Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of
-                GACC abbreviations
-            subgacc: Name of Sub GACC e.g. subgacc=EB07
+        Arguments:
+        ---------
+        state: string, optional
+            US state, 2-letter ID e.g. state=CO
+        county: string, optional
+            County/parish/borough (US/Canada only), full name e.g. county=Larimer
+        radius: string, optional
+            Distance from a lat/lon pt as [lat,lon,radius (mi)] e.g. radius=-120,40,20
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
+        cwa: string, optional
+            NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
+        nwsfirezone: string, optional
+            NWS Fire Zone (string) e.g. nwsfirezone=LOX241
+        gacc: string, optional
+            Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of
+            GACC abbreviations
+        subgacc: string, optional
+            Name of Sub GACC e.g. subgacc=EB07
 
         Returns:
             Dictionary of stations through the get_json_response method.
@@ -403,8 +459,9 @@ class Meso(object):
         Some stations may not record all variables listed. Use the station_list function to return metadata on each
         station.
 
-        Args:
-            None
+        Arguments:
+        ----------
+        None
 
         Returns:
             Dictionary of variables through the get_json_response method.
