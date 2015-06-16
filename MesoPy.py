@@ -38,7 +38,7 @@ class MesoPyError(Exception):
         self.error_message = error_message
 
     def __str__(self):
-        """ This just returns one of the above error messages """
+        r""" This just returns one of the above error messages """
         return repr(self.error_message)
 
 
@@ -51,16 +51,20 @@ class MesoPyError(Exception):
 
 class Meso(object):
     def __init__(self, api_token):
-        """	Instantiates an instance of MesoPy. Takes parameters for authentication, errors, and baseURL.
+        r""" Instantiates an instance of MesoPy. Takes parameters for authentication, errors, and baseURL.
 
-        Args:
-            api_token: Your API token that authenticates you for requests against MesoWest.
+        Arguments:
+        ----------
+        api_token: string, mandatory
+            Your API token that authenticates you for requests against MesoWest.
 
         Returns:
-            None.
+        --------
+        None.
 
         Raises:
-            None.
+        -------
+        None.
         """
 
         self.base_url = 'http://api.mesowest.net/v2/'
@@ -72,10 +76,10 @@ class Meso(object):
 
     @staticmethod
     def _checkresponse(response):
-        """ Returns the data requested by the other methods assuming the response from the API is ok. If not, provides
+        r""" Returns the data requested by the other methods assuming the response from the API is ok. If not, provides
         error handling for all possible API errors. HTTP errors are handled in the other methods.
 
-        Args:
+        Arguments:
             None.
 
         Returns:
@@ -141,49 +145,69 @@ class Meso(object):
             raise e
 
     def latest_obs(self, stid, **kwargs):
-        """ Returns in JSON format latest observations at a user specified location for a specified time. Other
+        r""" Returns in JSON format latest observations at a user specified location for a specified time. Other
         parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
         for station IDs.
 
-        Args:
-            stid (MANDATORY): Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb.
-            attime (OPTIONAL): Date and time in form of YYYYMMDDhhmm for which returned obs are closest. All times are UTC.
-                e.g. attime=201504261800.
-            within (OPTIONAL): When used without 'attime', it can be left blank to return the latest ob or represent the number of
-                minutes which would return the latest ob within that time period. When used with 'attime' it can be a
-                single number representing a time period before attime or two comma separated numbers representing a
-                period before and after the attime e.g. attime=201306011800&within=30,30 would return the ob closest to
-                attime within a 30 minute period before or after attime.
-            obtimezone (OPTIONAL): Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local.
-            showemptystations (OPTIONAL): Set to '1' to show stations even if no obs exist that match the time period. Stations
-                without obs are omitted by default.
-            state (OPTIONAL): US state, 2-letter ID e.g. state=CO.
-            country (OPTIONAL): Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx.
-            county (OPTIONAL): County/parish/borough (US/Canada only), full name e.g. county=Larimer.
-            radius (OPTIONAL): Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=-120,40,20.
-            bbox (OPTIONAL): Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
-            cwa (OPTIONAL): NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
-            nwsfirezone (OPTIONAL): NWS Fire Zone (string) e.g. nwsfirezone=LOX241
-            gacc (OPTIONAL): Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of
-                GACC abbreviations
-            subgacc (OPTIONAL): Name of Sub GACC e.g. subgacc=EB07
-            vars (OPTIONAL): single or comma separatd list of sensor variables. Will return all stations that match one of provided
-                variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
-                the query. e.g. vars=wind_speed,pressure Use the variables method to see a list of sensor vars
-            status (OPTIONAL): A value of either active or inactive returns stations currently set as active or inactive in the
-                archive. Omitting this param returns all stations e.g. status=active
-            units (OPTIONAL): string or set of strings and by pipes separated by commas. Default is metric units. Set units=ENGLISH
-                for FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps,
-                speed|mph, speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in;
-                alti|pa, alti|inhg. e.g. units=temp|F,speed|kph,metric
-            groupby (OPTIONAL): Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc,
-                subgacc e.g. groupby=state
+        Arguments:
+        ----------
+        stid: string, mandatory
+            Single or comma separated list of MesoWest station IDs. e.g. stid=kden,kslc,wbb
+        attime: string, optional
+            Date and time in form of YYYYMMDDhhmm for which returned obs are closest. All times are UTC. e.g.
+            attime=201504261800
+        within: string, optional
+            When used without 'attime', it can be left blank to return the latest ob or represent the number of minutes
+            which would return the latest ob within that time period. When used with 'attime' it can be a single number
+            representing a time period before attime or two comma separated numbers representing a period before and
+            after the attime e.g. attime=201306011800&within=30,30 would return the ob closest to attime within a 30 min
+            period before or after attime.
+        obtimezone: string, optional
+            Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone=local.
+        showemptystations: string, optional
+            Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
+            omitted by default.
+        state: string, optional
+            US state, 2-letter ID e.g. state=CO.
+        country: string, optional
+            Single or comma separated list of abbreviated 2 or 3 character countries e.g. country=us,ca,mx
+        county: string, optional
+            County/parish/borough (US/Canada only), full name e.g. county=Larimer
+        radius: string, optional
+            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=-120,40,20
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=-120,40,-119,41
+        cwa: string, optional
+            NWS county warning area (string) e.g. cwa=LOX See http://www.nws.noaa.gov/organization.php for CWA list
+        nwsfirezone: string, optional
+            NWS Fire Zone (string) e.g. nwsfirezone=LOX241
+        gacc: string, optional
+            Name of Geographic Area Coordination Center e.g. gacc=EBCC See http://gacc.nifc.gov/ for a list of GACCs.
+        subgacc: string, optional
+            Name of Sub GACC e.g. subgacc=EB07
+        vars: string, optional
+            Single or comma separatd list of sensor variables. Will return all stations that match one of provided
+            variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
+            the query. e.g. vars=wind_speed,pressure Use the variables method to see a list of sensor vars.
+        status: string, optional
+            A value of either active or inactive returns stations currently set as active or inactive in the archive.
+            Omitting this param returns all stations. e.g. status=active
+        units: string, optional
+            String or set of strings and pipes separated by commas. Default is metric units. Set units=ENGLISH for
+            FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
+            speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
+            alti|inhg. e.g. units=temp|F,speed|kph,metric
+        groupby: string, optional
+            Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
+            e.g. groupby=state
 
         Returns:
-            Dictionary of the latest time observations through the get_json_response method.
+        --------
+        Dictionary of the latest time observations through the get_json_response method.
 
         Raises:
-            None.
+        -------
+        None.
         """
 
         kwargs['stid'] = stid
