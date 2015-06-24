@@ -18,7 +18,7 @@ from MesoPy import Meso
 
 def main():
 
-    # This is just useful for formatting returned json
+    # This is just useful for formatting returned dict
     # pp = pprint.PrettyPrinter(indent=2)
 
     # Create instance of Meso object, pass in YOUR token
