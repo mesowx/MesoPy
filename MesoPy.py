@@ -28,8 +28,7 @@ except ImportError:
 # ==================================================================================================================== #
 # MesoPyError class                                                                                                    #
 # Type: Exception                                                                                                      #
-# Description: This class is simply the means for error handling when an exception is raised. Takes in the above       #
-# listed error variables                                                                                               #
+# Description: This class is simply the means for error handling when an exception is raised.                          #
 # ==================================================================================================================== #
 
 
@@ -38,7 +37,7 @@ class MesoPyError(Exception):
         self.error_message = error_message
 
     def __str__(self):
-        r""" This just returns one of the above error messages """
+        r""" This just returns one of the error messages listed in the checkresponse() method"""
         return repr(self.error_message)
 
 
@@ -51,7 +50,7 @@ class MesoPyError(Exception):
 
 class Meso(object):
     def __init__(self, api_token):
-        r""" Instantiates an instance of MesoPy. Takes parameters for authentication, errors, and baseURL.
+        r""" Instantiates an instance of MesoPy.
 
         Arguments:
         ----------
@@ -75,7 +74,7 @@ class Meso(object):
     @staticmethod
     def _checkresponse(response):
         r""" Returns the data requested by the other methods assuming the response from the API is ok. If not, provides
-        error handling for all possible API errors. HTTP errors are handled in the other methods.
+        error handling for all possible API errors. HTTP errors are handled in the get_response() method.
 
         Arguments:
         ----------
@@ -111,8 +110,8 @@ class Meso(object):
         else:
             raise MesoPyError(catch_error)
 
-    def _get_json_response(self, endpoint, request_dict):
-        """ Returns a Python object of data requested by each function.
+    def _get_response(self, endpoint, request_dict):
+        """ Returns a dictionary of data requested by each function.
 
         Arguments:
         ----------
@@ -122,7 +121,7 @@ class Meso(object):
             A dictionary of parameters that are formatted into the API call.
 
         Returns:
-            response: A python object of data that has been dumped from JSON.
+            response: A dictionary that has been dumped from JSON.
 
         Raises:
             MesoPyError: Overrides the exceptions given in the requests library to give more custom error messages.
@@ -135,7 +134,6 @@ class Meso(object):
 
         try:
             resp = requests.get(self.base_url + endpoint, params=request_dict)
-            print(resp)
             return self._checkresponse(resp.json())
         except requests.exceptions.ConnectionError:
             raise MesoPyError(connection_error)
@@ -147,8 +145,8 @@ class Meso(object):
             raise e
 
     def latest_obs(self, stid, **kwargs):
-        r""" Returns in JSON format latest observations at a user specified location for a specified time. Other
-        parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
+        r""" Returns a dictionary of latest observations at a user specified location for a specified time. Other
+        parameters may also be included. See below mandatory and optional parameters. Also see the station_list() method
         for station IDs.
 
         Arguments:
@@ -204,7 +202,7 @@ class Meso(object):
             e.g. groupby=state
 
         Returns:
-            Dictionary of the latest time observations through the get_json_response method.
+            Dictionary of the latest time observations through the get_response() method.
 
         Raises:
             None.
@@ -213,12 +211,12 @@ class Meso(object):
         kwargs['stid'] = stid
         kwargs['token'] = self.api_token
 
-        return self._get_json_response('stations/nearesttime', kwargs)
+        return self._get_response('stations/nearesttime', kwargs)
 
     def precipitation_obs(self, stid, start, end, **kwargs):
-        r""" Returns in JSON a time series of observations at a user specified location for a specified time. Other
-        parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
-        for station IDs.
+        r""" Returns a dictionary of a time series of observations at a user specified location for a specified time.
+        Other parameters may also be included. See below mandatory and optional parameters. Also see the station_list()
+        method for station IDs.
 
         Arguments:
         ----------
@@ -270,7 +268,7 @@ class Meso(object):
             e.g. groupby=state
 
         Returns:
-            Dictionary of precipitation observations through the get_json_response method.
+            Dictionary of precipitation observations through the get_response() method.
 
         Raises:
             None.
@@ -281,12 +279,12 @@ class Meso(object):
         kwargs['end'] = end
         kwargs['token'] = self.api_token
 
-        return self._get_json_response('stations/precipitation', kwargs)
+        return self._get_response('stations/precipitation', kwargs)
 
     def timeseries_obs(self, stid, start, end, **kwargs):
-        r""" Returns in JSON a time series of observations at a user specified location for a specified time. Other
-        parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
-        for station IDs.
+        r""" Returns a dictionary of time series of observations at a user specified location for a specified time.
+        Other parameters may also be included. See below mandatory and optional parameters. Also see the station_list()
+        method for station IDs.
 
         Arguments:
         ----------
@@ -338,7 +336,7 @@ class Meso(object):
             e.g. groupby=state
 
         Returns:
-            Dictionary of time series observations through the get_json_response method.
+            Dictionary of time series observations through the get_response() method.
 
         Raises:
             None.
@@ -349,12 +347,12 @@ class Meso(object):
         kwargs['end'] = end
         kwargs['token'] = self.api_token
 
-        return self._get_json_response('stations/timeseries', kwargs)
+        return self._get_response('stations/timeseries', kwargs)
 
     def climatology_obs(self, stid, startclim, endclim, **kwargs):
-        r""" Returns in JSON a time series of observations at a user specified location for a specified time. Other
-        parameters may also be included. See below mandatory and optional parameters. Also see the station_list method
-        for station IDs.
+        r""" Returns a dictionary of a climatology of observations at a user specified location for a specified time.
+        Other parameters may also be included. See below mandatory and optional parameters. Also see the station_list()
+        method for station IDs.
 
         Arguments:
         ----------
@@ -406,7 +404,7 @@ class Meso(object):
             e.g. groupby=state
 
         Returns:
-            Dictionary of climatology observations through the get_json_response method.
+            Dictionary of climatology observations through the get_response() method.
 
         Raises:
             None.
@@ -417,10 +415,10 @@ class Meso(object):
         kwargs['endclim'] = endclim
         kwargs['token'] = self.api_token
 
-        return self._get_json_response('stations/climatology', kwargs)
+        return self._get_response('stations/climatology', kwargs)
 
     def station_list(self, **kwargs):
-        """ Returns in JSON format a list of stations (and metadata)that corresponds to user-specified parameters.
+        """ Returns a dictionary of a list of stations (and metadata) that corresponds to user-specified parameters.
 
         Arguments:
         ---------
@@ -443,7 +441,7 @@ class Meso(object):
             Name of Sub GACC e.g. subgacc=EB07
 
         Returns:
-            Dictionary of stations through the get_json_response method.
+            Dictionary of stations through the get_response() method.
 
         Raises:
             None.
@@ -452,11 +450,11 @@ class Meso(object):
         kwargs['network'] = '1,2'
         kwargs['token'] = self.api_token
 
-        return self._get_json_response('stations/metadata', kwargs)
+        return self._get_response('stations/metadata', kwargs)
 
     def variable_list(self):
-        """ Returns in JSON format a list of variables that could be obtained from the 'vars' param in other functions.
-        Some stations may not record all variables listed. Use the station_list function to return metadata on each
+        """ Returns a dictionary of a list of variables that could be obtained from the 'vars' param in other functions.
+        Some stations may not record all variables listed. Use the station_list() function to return metadata on each
         station.
 
         Arguments:
@@ -464,10 +462,10 @@ class Meso(object):
         None
 
         Returns:
-            Dictionary of variables through the get_json_response method.
+            Dictionary of variables through the get_response() method.
 
         Raises:
             None.
         """
 
-        return self._get_json_response('variables', {'token': self.api_token})
+        return self._get_response('variables', {'token': self.api_token})
