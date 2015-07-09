@@ -32,14 +32,13 @@ def main():
     stations = ['kgxy, kccu, kcos, kden, kgjt, kbdu, kpub, klhx, kspd, kdro, ksbs, keeo, kguc, klic, '
                 'kstk, kals, ktad']
     latest = m.latest_obs(stid=stations, within='90', vars='air_temp', units='temp|F')
-    print(latest)
 
     # create a list to store everything, iterate over the number of objs returned in latest and append
     # lat, long, temp, and stid for use later
     data = []
-    for ob in latest['STATION']:
-        data.append((float(ob['LATITUDE']), float(ob['LONGITUDE']),
-                     float(ob['OBSERVATIONS']['air_temp_value_1']['value']), ob['STID']))
+    [data.append((float(ob['LATITUDE']), float(ob['LONGITUDE']), float(ob['OBSERVATIONS']['air_temp_value_1']['value']),
+                  ob['STID'])) for ob in latest['STATION']]
+    print data
 
     # Create a MapQuest open aerial instance.
     map_quest_aerial = cimgt.MapQuestOpenAerial()
