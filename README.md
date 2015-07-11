@@ -85,7 +85,7 @@ Full documentation can be found by clicking the below badge:
 These can be found in the `/examples` path.
 
 ## Version and License
-1.1.01 released on 28 May 2015 under the MIT license
+1.1.2 released on 11 Jul 2015 under the MIT license
 
 ## Support and Credits
 MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [joclark@ucar.edu]. MesoWest has originally created by Dr. John Horel's [research group] at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
