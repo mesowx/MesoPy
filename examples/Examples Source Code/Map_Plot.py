@@ -38,7 +38,7 @@ def main():
     data = []
     [data.append((float(ob['LATITUDE']), float(ob['LONGITUDE']), float(ob['OBSERVATIONS']['air_temp_value_1']['value']),
                   ob['STID'])) for ob in latest['STATION']]
-    print data
+    print(data)
 
     # Create a MapQuest open aerial instance.
     map_quest_aerial = cimgt.MapQuestOpenAerial()
