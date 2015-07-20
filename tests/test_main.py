@@ -55,6 +55,14 @@ def testbadurlstring():
     latest = m.latest_obs(stid='')
     print(latest)
 
+@raises(MesoPyError)
+def testauth():
+    m = Meso(api_token='3030')
+    latest = m.latest_obs(stid=['kfnl', 'kden', 'ksdf'])
+
+
+
+
 
 # def testconverter():
 #     m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
