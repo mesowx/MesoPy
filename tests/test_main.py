@@ -47,28 +47,20 @@ def testlateststrlist():
 
 
 # Error Handling
-
-#Request string format error
 @raises(MesoPyError)
 def testbadurlstring():
     m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
     latest = m.latest_obs(stid='')
     print(latest)
 
+
 @raises(MesoPyError)
 def testauth():
     m = Meso(api_token='3030')
-    latest = m.latest_obs(stid=['kfnl', 'kden', 'ksdf'])
+    m.latest_obs(stid=['kfnl', 'kden', 'ksdf'])
 
 
-
-
-
-# def testconverter():
-#     m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
-#     latestkgxy = m.latest_obs(stid='kgxy', attime='201505010600', within='60',  units='temp|F, speed|mph')
-#     temp = latestkgxy['STATION'][0]['OBSERVATIONS']['air_temp_value_1']['value']
-#     print(temp)
-#     convert = m.convert(temp, 'm', 'pa')
-#     print(convert)
-#     eq_(convert, 0.536)
+@raises(MesoPyError)
+def testgeoparms():
+    m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
+    m.precipitation_obs(start='201504261800', end='201504271200', units='precip|in')
