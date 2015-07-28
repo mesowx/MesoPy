@@ -96,3 +96,7 @@ MesoPy was designed to be as simple as possible and I hope you enjoy its usage. 
 [here]: http://mesopy.readthedocs.org/en/latest/
 [research group]: http://meso1.chpc.utah.edu/mesowest_overview/
 [Western Region]: http://www.wrh.noaa.gov/
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jclark754/mesopy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
