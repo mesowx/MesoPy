@@ -10,7 +10,7 @@ MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.
 ## Requirements
 MesoPy requires [requests] `pip install requests` because of it's voodoo powers in making API calls for us. 
 
-**Before using MesoPy, you will need to obtain an API key/token by contacting the MesoWest folks at [mesowestapi@gmail.com].** Be sure to provide your name, email, phone number, and a brief description on your intended use of MesoWest data. You will receive an email with an API key and a link to generate a token. Click the link and copy the token you just generated when instancing the Meso object like so: `m = Meso(api_token='YOUR API_TOKEN')`
+**Before using MesoPy, you will need to obtain an API key/token by contacting the MesoWest folks [here].** You will receive an email with an API key and a link to generate a token. Click the link and copy the token you just generated when instancing the Meso object like so: `m = Meso(api_token='YOUR API_TOKEN')`
 
 
 ## Installation
@@ -91,9 +91,8 @@ These can be found in the `/examples` path.
 MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [joclark@ucar.edu]. MesoWest has originally created by Dr. John Horel's [research group] at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
 
 [requests]:https://pypi.python.org/pypi/requests/
-[mesowestapi@gmail.com]: mailto:mesowestapi@gmail.com
+[here]: http://mesowest.org/api/signup/
 [joclark@ucar.edu]: mailto:joclark@ucar.edu
-[here]: http://mesopy.readthedocs.org/en/latest/
 [research group]: http://meso1.chpc.utah.edu/mesowest_overview/
 [Western Region]: http://www.wrh.noaa.gov/
 
