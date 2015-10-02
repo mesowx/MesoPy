@@ -468,6 +468,9 @@ class Meso(object):
             GACC abbreviations
         subgacc: string, optional
             Name of Sub GACC e.g. subgacc='EB07'
+        network: string, optional
+            Single or comma separated list of network IDs. The ID may be found by using the /networks web service.
+            e.g. network='1,2'
 
         Returns:
             Dictionary of stations through the get_response() method.
@@ -476,7 +479,6 @@ class Meso(object):
             None.
         """
 
-        kwargs['network'] = '1,2'
         kwargs['token'] = self.api_token
 
         return self._get_response('stations/metadata', kwargs)
@@ -498,3 +500,5 @@ class Meso(object):
         """
 
         return self._get_response('variables', {'token': self.api_token})
+
+
