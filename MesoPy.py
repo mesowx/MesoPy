@@ -199,9 +199,9 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'.
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: string, optional
+        radius: list, optional
             Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
-        bbox: string, optional
+        bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
             NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
