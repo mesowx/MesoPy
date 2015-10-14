@@ -266,9 +266,9 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'.
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: string, optional
+        radius: list, optional
             Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
-        bbox: string, optional
+        bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
             NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
@@ -318,10 +318,10 @@ class Meso(object):
         ----------
         start: string, mandatory
             Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
-            e.g., start=201306011800
+            e.g., start='201306011800'
         end: string, mandatory
             End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
-            e.g., end=201306011800
+            e.g., end='201306011800'
         obtimezone: string, optional
             Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
         showemptystations: string, optional
@@ -335,9 +335,9 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'.
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: string, optional
+        radius: list, optional
             Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
-        bbox: string, optional
+        bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
             NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
@@ -387,10 +387,10 @@ class Meso(object):
         ----------
         startclim: string, mandatory
             Start date in form of MMDDhhmm. MUST BE USED WITH THE ENDCLIM PARAMETER. Default time is UTC
-            e.g. startclim=06011800 Do not specify a year
+            e.g. startclim='06011800' Do not specify a year
         endclim: string, mandatory
             End date in form of MMDDhhmm. MUST BE USED WITH THE STARTCLIM PARAMETER. Default time is UTC
-            e.g. endclim=06011800 Do not specify a year
+            e.g. endclim='06011800' Do not specify a year
         obtimezone: string, optional
             Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
         showemptystations: string, optional
@@ -404,9 +404,9 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'.
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: string, optional
+        radius: list, optional
             Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
-        bbox: string, optional
+        bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
             NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
@@ -455,9 +455,9 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'
         county: string, optional
             County/parish/borough (US/Canada only), full name e.g. county='Larimer'
-        radius: string, optional
+        radius: list, optional
             Distance from a lat/lon pt as [lat,lon,radius (mi)] e.g. radius=[-120,40,20]
-        bbox: string, optional
+        bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
             NWS county warning area (string) e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
