@@ -8,7 +8,6 @@
 
 .coverage
 examples/*.gif
-example/Basic_Usage.ipynb
 dist/*
 build/*
 *.egg-info
