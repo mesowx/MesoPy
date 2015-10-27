@@ -1,6 +1,5 @@
 # MesoPy
-[![Build Status](https://travis-ci.org/jclark754/MesoPy.svg?branch=master)](https://travis-ci.org/jclark754/MesoPy)
-[![Code Health](https://landscape.io/github/jclark754/MesoPy/master/landscape.svg?style=flat)](https://landscape.io/github/jclark754/MesoPy/master)
+[![Build Status](https://travis-ci.org/mesowx/MesoPy.svg?branch=master)](https://travis-ci.org/mesowx/MesoPy)[![Code Health](https://landscape.io/github/jclark754/MesoPy/master/landscape.svg?style=flat)](https://landscape.io/github/jclark754/MesoPy/master)
 [![Coverage Status](https://coveralls.io/repos/jclark754/MesoPy/badge.svg?branch=master)](https://coveralls.io/r/jclark754/MesoPy?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](http://mesopy.readthedocs.org/en/latest/)
 [![PyPI](https://img.shields.io/pypi/dm/MesoPy.svg)](https://pypi.python.org/pypi/MesoPy)
