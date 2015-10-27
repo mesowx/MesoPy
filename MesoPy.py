@@ -84,12 +84,15 @@ class Meso(object):
             None.
 
         Returns:
+        --------
             The response from the API as a dictionary if the API code is 2.
 
         Raises:
+        -------
             MesoPyError: Gives different response messages depending on returned code from API. If the response is 2,
             resultsError is displayed. For a response of 200, an authError message is shown. A ruleError is displayed
             if the code is 400, a formatError for -1, and catchError for any other invalid response.
+
         """
 
         results_error = 'No results were found matching your query'
@@ -124,12 +127,15 @@ class Meso(object):
             A dictionary of parameters that are formatted into the API call.
 
         Returns:
+        --------
             response: A dictionary that has been dumped from JSON.
 
         Raises:
+        -------
             MesoPyError: Overrides the exceptions given in the requests library to give more custom error messages.
             Connection_error occurs if no internet connection exists. Timeout_error occurs if the request takes too
             long and redirect_error is shown if the url is formatted incorrectly.
+
         """
         connection_error = 'Could not connect to the API. Please check your connection'
         timeout_error = 'Connection Timeout, please retry later'
@@ -152,15 +158,18 @@ class Meso(object):
         parameters: 'stid', 'state', 'country', 'county', 'radius', 'bbox', 'cwa', 'nwsfirezone', 'gacc', or 'subgacc'.
 
         Arguments:
-        ==========
+        ----------
         arg_list: list, mandatory
             A list of kwargs from other functions.
 
         Returns:
+        --------
             None.
 
         Raises:
+        -------
             MesoPyError if no geographic search criteria is provided.
+
         """
 
         geo_func = lambda a, b: any(i in b for i in a)
@@ -228,10 +237,13 @@ class Meso(object):
             e.g. groupby='state'
 
         Returns:
+        --------
             Dictionary of the latest time observations through the get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         self._check_geo_param(kwargs)
@@ -295,10 +307,13 @@ class Meso(object):
             e.g. groupby='state'
 
         Returns:
+        --------
             Dictionary of precipitation observations through the get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         self._check_geo_param(kwargs)
@@ -364,9 +379,11 @@ class Meso(object):
             e.g. groupby='state'
 
         Returns:
+        --------
             Dictionary of time series observations through the get_response() method.
 
         Raises:
+        -------
             None.
         """
 
@@ -433,10 +450,13 @@ class Meso(object):
             e.g. groupby='state'
 
         Returns:
+        --------
             Dictionary of climatology observations through the get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         self._check_geo_param(kwargs)
@@ -473,10 +493,13 @@ class Meso(object):
             e.g. network='1,2'
 
         Returns:
+        --------
             Dictionary of stations through the get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         kwargs['token'] = self.api_token
@@ -493,10 +516,13 @@ class Meso(object):
         None
 
         Returns:
+        --------
             Dictionary of variables through the get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         return self._get_response('variables', {'token': self.api_token})
@@ -560,10 +586,13 @@ class Meso(object):
             e.g. groupby='state'
 
         Returns:
+        --------
             Dictionary of aggregated climatology statistics through the _get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         self._check_geo_param(kwargs)
@@ -633,10 +662,13 @@ class Meso(object):
             e.g. groupby='state'
 
         Returns:
+        --------
             Dictionary of discrete time statistics through the _get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         self._check_geo_param(kwargs)
@@ -699,10 +731,13 @@ class Meso(object):
             e.g. groupby='state'
 
         Returns:
+        --------
             Dictionary of metadata through the _get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         self._check_geo_param(kwargs)
@@ -768,9 +803,11 @@ class Meso(object):
             e.g. groupby='state'
 
         Returns:
+        --------
             Dictionary of latency data through the _get_response() method.
 
         Raises:
+        -------
             None.
 
         """
@@ -789,19 +826,23 @@ class Meso(object):
         Arguments:
         ----------
         id: string, optional
-            A single or comma-separated list of MesoNet categories.
+            A single or comma-separated list of MesoNet network categories.
             e.g.: ids='1,2,3'
         shortname: string, optional
             A single or comma-separated list of abbreviations or short names.
             e.g: shortname = 'raws,nws/faa'
         sortby: string, optional
             Determines how to sort the returned networks. The only valid value is 'alphabet' which orders the results
-            in alphabetical order. By default, networks are sorted by ID.  e.g.:
+            in alphabetical order. By default, networks are sorted by ID.
+
         Returns:
+        --------
             Dictionary of network descriptions through the get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         kwargs['token'] = self.api_token
@@ -818,10 +859,13 @@ class Meso(object):
             A single or comma-separated list of MesoNet categories. e.g.: type_ids='1,2,3'
 
         Returns:
+        --------
             Dictionary of network type descriptions through the get_response() method.
 
         Raises:
+        -------
             None.
+
         """
 
         kwargs['token'] = self.api_token
