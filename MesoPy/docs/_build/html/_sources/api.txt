@@ -1,0 +1,11 @@
+*****************
+MesoPy API
+*****************
+
+Classes:
+
+.. toctree::
+   :maxdepth: 2
+
+   meso
+   mesopyerror

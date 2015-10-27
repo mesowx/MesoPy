@@ -1,0 +1,16 @@
+~*
+.DS_Store
+*.swp
+.idea/
+.ipynb_checkpoints
+
+*.pyc
+
+.coverage
+examples/*.gif
+dist/*
+build/*
+*.egg-info
+MANIFEST
+__pycache__
+

@@ -1,0 +1,30 @@
+language: python
+
+matrix:
+  include:
+    - python: 3.4
+      env: NOSE_WITH_COVERAGE=y NOSE_COVER_PACKAGE=MesoPy
+
+python:
+  - 2.7
+  - 3.2
+  - 3.3
+
+before_install:
+  - pip install requests
+  - if [[ $NOSE_WITH_COVERAGE == y ]]; then
+      pip install coverage;
+    fi
+    
+# command to install dependencies
+install: 
+  - python setup.py install
+  
+# command to run tests
+script: nosetests tests
+
+after_success:
+  - if [[ $NOSE_WITH_COVERAGE == y ]]; then
+      pip install coveralls;
+      coveralls;
+    fi

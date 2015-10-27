@@ -1,7 +1,7 @@
 # ==================================================================================================================== #
 # MesoPy                                                                                                               #
 # Version: 2.0.0                                                                                                       #
-# Copyright (c) 2015 MesoWest Developers <atmos-mesowest@lists.utah.edu>                                               #
+# Copyright (c) 2015 MesoWest Developers                                                                               #
 #                                                                                                                      #
 # LICENSE:                                                                                                             #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated         #
@@ -22,7 +22,6 @@
 try:
     # noinspection PyUnresolvedReferences
     from requests import get, exceptions
-
 except ImportError:
     raise Exception("MesoPy requires the 'requests' library to work")
 
@@ -200,7 +199,7 @@ class Meso(object):
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
         radius: list, optional
-            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[40,-120,20]
+            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
         bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
@@ -267,7 +266,7 @@ class Meso(object):
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
         radius: list, optional
-            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[40,-120,20]
+            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
         bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
@@ -336,7 +335,7 @@ class Meso(object):
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
         radius: list, optional
-            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[40,-120,20]
+            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
         bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
@@ -405,7 +404,7 @@ class Meso(object):
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
         radius: list, optional
-            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[40,-120,20]
+            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
         bbox: list, optional
             Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
         cwa: string, optional
@@ -501,337 +500,314 @@ class Meso(object):
 
         return self._get_response('variables', {'token': self.api_token})
 
-    def climate_stats(self, stat_type, startclim, endclim, **kwargs):
-        r""" Returns a dictionary of aggregated yearly climate statistics (count, standard deviation,
-        average, median, maximum, minimum, min time, and max time depending on user specified type) of a time series
-        for a specified range of time at user specified location.  Users must specify at least one geographic search
-        parameter ('stid', 'state', 'country', 'county', 'radius', 'bbox', 'cwa', 'nwsfirezone', 'gacc', or 'subgacc')
-        to obtain observation data. Other parameters may also be included. See below mandatory and optional parameters.
-        Also see the station_list() method for station IDs.
 
-        Arguments:
-        ----------
-        type: string, mandatory
-            Describes what statistical values will be returned. Can be one of the following values:
-            "avg"/"average"/"mean", "max"/"maximum", "min"/"minimum", "stdev"/"standarddeviation"/"std", "median"/"med",
-            "count", or "all". "All" will return all of the statistics.
-        startclim: string, mandatory
-            Start date in form of MMDDhhmm. MUST BE USED WITH THE ENDCLIM PARAMETER. Default time is UTC
-            e.g. startclim=06011800 Do not specify a year.
-        endclim: string, mandatory
-            End date in form of MMDDhhmm. MUST BE USED WITH THE STARTCLIM PARAMETER. Default time is UTC
-            e.g. endclim=06011800 Do not specify a year.
-        obtimezone: string, optional
-            Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
-        showemptystations: string, optional
-            Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
-            omitted by default.
-        stid: string, optional
-            Single or comma separated list of MesoWest station IDs. e.g. stid='kden,kslc,wbb'
-        county: string, optional
-            County/parish/borough (US/Canada only), full name e.g. county='Larimer'
-        state: string, optional
-            US state, 2-letter ID e.g. state='CO'.
-        country: string, optional
-            Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: string, optional
-            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
-        bbox: string, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
-        cwa: string, optional
-            NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
-        nwsfirezone: string, optional
-            NWS Fire Zone e.g. nwsfirezone='LOX241'
-        gacc: string, optional
-            Name of Geographic Area Coordination Center e.g. gacc='EBCC' See http://gacc.nifc.gov/ for a list of GACCs.
-        subgacc: string, optional
-            Name of Sub GACC e.g. subgacc='EB07'
-        vars: string, optional
-            Single or comma separatd list of sensor variables. Will return all stations that match one of provided
-            variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
-            the query. e.g. vars='wind_speed,pressure' Use the variables method to see a list of sensor vars.
-        units: string, optional
-            String or set of strings and pipes separated by commas. Default is metric units. Set units='ENGLISH' for
-            FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
-            speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
-            alti|inhg. e.g. units='temp|F,speed|kph,metric'
-        groupby: string, optional
-            Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
-            e.g. groupby='state'
+def climate_stats(self, startclim, endclim, **kwargs):
+    r"""
+    Returns a dictionary of aggregated yearly climate statistics (count, standard deviation,
+    average, median, maximum, minimum, min time, and max time) of a time series
+    for a specified range of time at user specified location.
 
-        Returns:
-            Dictionary of aggregated climatology statistics through the _get_response() method.
+    Usage: x = r.agg_stats(stid='stid',startclim='MMDDhhmm',endclim='MMDDhhmm')
 
-        Raises:
-            None.
-        """
+    Arguments:
+    ----------
+    type: string, mandatory
+        Describes what statistical values will be returned.
+        Can be one of the following values: "avg"/"average"/"mean", "max"/"maximum",
+        "min"/"minimum", "stdev"/"standarddeviation"/"std", "median"/"med",
+        "count", or "all". "All" will return all of the statistics.
+    start: string, optional
+        Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
+        e.g. start=201506011800.
+    end: string, optional
+        End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
+        e.g. end=201506011800.
+    startclim: string, optional
+        Start date in form of MMDDhhmm. MUST BE USED WITH THE ENDCLIM PARAMETER. Default time is UTC
+        e.g. startclim=06011800 Do not specify a year.
+    endclim: string, optional
+        End date in form of MMDDhhmm. MUST BE USED WITH THE STARTCLIM PARAMETER. Default time is UTC
+        e.g. endclim=06011800 Do not specify a year.
+    obtimezone: string, optional
+        Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
+    showemptystations: string, optional
+        Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
+        omitted by default.
+    stid: string, optional
+        Single or comma separated list of MesoWest station IDs. e.g. stid='kden,kslc,wbb'
+    county: string, optional
+        County/parish/borough (US/Canada only), full name e.g. county='Larimer'
+    state: string, optional
+        US state, 2-letter ID e.g. state='CO'.
+    country: string, optional
+        Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
+    radius: string, optional
+        Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
+    bbox: string, optional
+        Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+    cwa: string, optional
+        NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
+    nwsfirezone: string, optional
+        NWS Fire Zone e.g. nwsfirezone='LOX241'
+    gacc: string, optional
+        Name of Geographic Area Coordination Center e.g. gacc='EBCC' See http://gacc.nifc.gov/ for a list of GACCs.
+    subgacc: string, optional
+        Name of Sub GACC e.g. subgacc='EB07'
+    vars: string, optional
+        Single or comma separatd list of sensor variables. Will return all stations that match one of provided
+        variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
+        the query. e.g. vars='wind_speed,pressure' Use the variables method to see a list of sensor vars.
+    units: string, optional
+        String or set of strings and pipes separated by commas. Default is metric units. Set units='ENGLISH' for
+        FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
+        speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
+        alti|inhg. e.g. units='temp|F,speed|kph,metric'
+    groupby: string, optional
+        Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
+        e.g. groupby='state'
 
-        self._check_geo_param(kwargs)
-        kwargs['type'] = stat_type
-        kwargs['startclim'] = startclim
-        kwargs['endclim'] = endclim
-        kwargs['token'] = self.api_token
+    Returns:
+        Dictionary of aggregated statistics through the _get_response() method.
 
-        return self._get_response('stations/statistics', kwargs)
+    Raises:
+        None.
+    """
 
-    def discrete_stats(self, start, end, **kwargs):
-        r""" Returns a dictionary of discrete time statistics (count, standard deviation,
-        average, median, maximum, minimum, min time, and max time depending on user specified type) of a time series
-        for a specified range of time at user specified location. Users must specify at least one geographic search
-        parameter ('stid', 'state', 'country', 'county', 'radius', 'bbox', 'cwa', 'nwsfirezone', 'gacc', or 'subgacc')
-        to obtain observation data. Other parameters may also be included. See below mandatory and optional parameters.
-        Also see the station_list() method for station IDs.
+    self._check_geo_param(kwargs)
+    kwargs['startclim'] = startclim
+    kwargs['endclim'] = endclim
+    kwargs['token'] = self.api_token
 
-        Arguments:
-        ----------
-        type: string, mandatory
-            Describes what statistical values will be returned. Can be one of the following values:
-            "avg"/"average"/"mean", "max"/"maximum", "min"/"minimum", "stdev"/"standarddeviation"/"std", "median"/"med",
-            "count", or "all". "All" will return all of the statistics.
-        start: string, optional
-            Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
-            e.g. start=201506011800.
-        end: string, optional
-            End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
-            e.g. end=201506011800.
-        obtimezone: string, optional
-            Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
-        showemptystations: string, optional
-            Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
-            omitted by default.
-        stid: string, optional
-            Single or comma separated list of MesoWest station IDs. e.g. stid='kden,kslc,wbb'
-        county: string, optional
-            County/parish/borough (US/Canada only), full name e.g. county='Larimer'
-        state: string, optional
-            US state, 2-letter ID e.g. state='CO'.
-        country: string, optional
-            Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: string, optional
-            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
-        bbox: string, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
-        cwa: string, optional
-            NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
-        nwsfirezone: string, optional
-            NWS Fire Zone e.g. nwsfirezone='LOX241'
-        gacc: string, optional
-            Name of Geographic Area Coordination Center e.g. gacc='EBCC' See http://gacc.nifc.gov/ for a list of GACCs.
-        subgacc: string, optional
-            Name of Sub GACC e.g. subgacc='EB07'
-        vars: string, optional
-            Single or comma separatd list of sensor variables. Will return all stations that match one of provided
-            variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
-            the query. e.g. vars='wind_speed,pressure' Use the variables method to see a list of sensor vars.
-        units: string, optional
-            String or set of strings and pipes separated by commas. Default is metric units. Set units='ENGLISH' for
-            FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
-            speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
-            alti|inhg. e.g. units='temp|F,speed|kph,metric'
-        groupby: string, optional
-            Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
-            e.g. groupby='state'
-
-        Returns:
-            Dictionary of discrete time statistics through the _get_response() method.
-
-        Raises:
-            None.
-        """
-
-        self._check_geo_param(kwargs)
-        kwargs['start'] = start
-        kwargs['end'] = end
-        kwargs['token'] = self.api_token
-
-        return self._get_response('stations/statistics', kwargs)
-
-    def metadata_query(self, **kwargs):
-        r""" Returns a dictionary describing the metadata for a station or stations. Users must specify at least one
-        geographic search parameter ('stid', 'state', 'country', 'county', 'radius', 'bbox', 'cwa', 'nwsfirezone',
-        'gacc', or 'subgacc') to obtain observation data. Other parameters may also be included. See below mandatory
-        and optional parameters. Also see the station_list() method for station IDs.
-
-        Arguments:
-        ----------
-        complete: integer, optional
-            A value of 1 or 0. When set to 1, an extended list of metadata attributes for each returned station is
-            provided. This result is useful for exploring the zones and regions in which a station resides.
-        obtimezone: string, optional
-            Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
-        showemptystations: string, optional
-            Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
-            omitted by default.
-        stid: string, optional
-            Single or comma separated list of MesoWest station IDs. e.g. stid='kden,kslc,wbb'
-        county: string, optional
-            County/parish/borough (US/Canada only), full name e.g. county='Larimer'
-        state: string, optional
-            US state, 2-letter ID e.g. state='CO'.
-        country: string, optional
-            Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: string, optional
-            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
-        bbox: string, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
-        cwa: string, optional
-            NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
-        nwsfirezone: string, optional
-            NWS Fire Zone e.g. nwsfirezone='LOX241'
-        gacc: string, optional
-            Name of Geographic Area Coordination Center e.g. gacc='EBCC' See http://gacc.nifc.gov/ for a list of GACCs.
-        subgacc: string, optional
-            Name of Sub GACC e.g. subgacc='EB07'
-        vars: string, optional
-            Single or comma separatd list of sensor variables. Will return all stations that match one of provided
-            variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
-            the query. e.g. vars='wind_speed,pressure' Use the variables method to see a list of sensor vars.
-        status: string, optional
-            A value of either active or inactive returns stations currently set as active or inactive in the archive.
-            Omitting this param returns all stations. e.g. status='active'
-        units: string, optional
-            String or set of strings and pipes separated by commas. Default is metric units. Set units='ENGLISH' for
-            FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
-            speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
-            alti|inhg. e.g. units='temp|F,speed|kph,metric'
-        groupby: string, optional
-            Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
-            e.g. groupby='state'
-
-        Returns:
-            Dictionary of metadata through the _get_response() method.
-
-        Raises:
-            None.
-        """
-
-        self._check_geo_param(kwargs)
-        kwargs['token'] = self.api_token
-
-        return self._get_response('stations/metadata', kwargs)
-
-    def latency_query(self, start, end, **kwargs):
-        r""" Returns a dictionary of data latency values for a station or set of stations based on a start and end
-        date/time. Users must specify at least one geographic search parameter ('stid', 'state', 'country', 'county',
-        'radius', 'bbox', 'cwa', 'nwsfirezone', 'gacc', or 'subgacc') to obtain observation data. Other parameters may
-        also be included. See below mandatory and optional parameters. Also see the station_list() method for station
-        IDs.
-
-        Arguments:
-        ----------
-        start: string, mandatory
-            Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
-            e.g. start=201506011800.
-        end: string, mandatory
-            End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
-            e.g. end=201506011800.
-        stats: string, optional
-            Describes what statistical values will be returned. Can be one of the following values:
-            "avg"/"average"/"mean", "max"/"maximum", "min"/"minimum", "stdev"/"standarddeviation"/"std", "median"/"med",
-            "count", or "all". "All" will return all of the statistics.
-        obtimezone: string, optional
-            Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
-        showemptystations: string, optional
-            Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
-            omitted by default.
-        stid: string, optional
-            Single or comma separated list of MesoWest station IDs. e.g. stid='kden,kslc,wbb'
-        county: string, optional
-            County/parish/borough (US/Canada only), full name e.g. county='Larimer'
-        state: string, optional
-            US state, 2-letter ID e.g. state='CO'.
-        country: string, optional
-            Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: string, optional
-            Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
-        bbox: string, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
-        cwa: string, optional
-            NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
-        nwsfirezone: string, optional
-            NWS Fire Zone e.g. nwsfirezone='LOX241'
-        gacc: string, optional
-            Name of Geographic Area Coordination Center e.g. gacc='EBCC' See http://gacc.nifc.gov/ for a list of GACCs.
-        subgacc: string, optional
-            Name of Sub GACC e.g. subgacc='EB07'
-        vars: string, optional
-            Single or comma separatd list of sensor variables. Will return all stations that match one of provided
-            variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
-            the query. e.g. vars='wind_speed,pressure' Use the variables method to see a list of sensor vars.
-        units: string, optional
-            String or set of strings and pipes separated by commas. Default is metric units. Set units='ENGLISH' for
-            FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
-            speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
-            alti|inhg. e.g. units='temp|F,speed|kph,metric'
-        groupby: string, optional
-            Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
-            e.g. groupby='state'
-
-        Returns:
-            Dictionary of latency data through the _get_response() method.
-
-        Raises:
-            None.
-
-        """
-
-        self._check_geo_param(kwargs)
-        kwargs['start'] = start
-        kwargs['end'] = end
-        kwargs['token'] = self.api_token
-
-        return self._get_response('stations/latency', kwargs)
-
-    def network_query(self, **kwargs):
-        r""" Returns the network of the MesoWest network ID(s) entered. Can be left blank to return all networks.
-        Documentation for all MesoWest Networks can be found at: http://mesowest.utah.edu/cgi-bin/droman/mnet_no.cgi
-
-        Arguments:
-        ----------
-        id: string, optional
-            A single or comma-separated list of MesoNet categories.
-            e.g.: ids='1,2,3'
-        shortname: string, optional
-            A single or comma-separated list of abbreviations or short names.
-            e.g: shortname = 'raws,nws/faa'
-        sortby: string, optional
-            Determines how to sort the returned networks. The only valid value is 'alphabet' which orders the results
-            in alphabetical order. By default, networks are sorted by ID.  e.g.:
-        Returns:
-            Dictionary of network descriptions through the get_response() method.
-
-        Raises:
-            None.
-        """
-
-        kwargs['token'] = self.api_token
-
-        return self._get_response('networks', kwargs)
-
-    def networktypes_query(self, **kwargs):
-        r""" Returns the network type metadata depending on the ID specified. Can be left blank to return all network
-        types.
-
-        Arguments:
-        ----------
-        id: string, optional
-            A single or comma-separated list of MesoNet categories. e.g.: type_ids='1,2,3'
-
-        Returns:
-            Dictionary of network type descriptions through the get_response() method.
-
-        Raises:
-            None.
-        """
-
-        kwargs['token'] = self.api_token
-
-        return self._get_response('networktypes', kwargs)
+    return self._get_response('stations/statistics', kwargs)
 
 
+def discrete_stats(self, start, end, **kwargs):
+    r"""
+    Returns a dictionary of aggregated yearly climate statistics (count, standard deviation,
+    average, median, maximum, minimum, min time, and max time) of a time series
+    for a specified range of time at user specified location.
+
+    Usage: x = r.agg_stats(stid='stid',startclim='MMDDhhmm',endclim='MMDDhhmm')
+
+    Arguments:
+    ----------
+    type: string, mandatory
+        Describes what statistical values will be returned.
+        Can be one of the following values: "avg"/"average"/"mean", "max"/"maximum",
+        "min"/"minimum", "stdev"/"standarddeviation"/"std", "median"/"med",
+        "count", or "all". "All" will return all of the statistics.
+    start: string, optional
+        Start date in form of YYYYMMDDhhmm. MUST BE USED WITH THE END PARAMETER. Default time is UTC
+        e.g. start=201506011800.
+    end: string, optional
+        End date in form of YYYYMMDDhhmm. MUST BE USED WITH THE START PARAMETER. Default time is UTC
+        e.g. end=201506011800.
+    startclim: string, optional
+        Start date in form of MMDDhhmm. MUST BE USED WITH THE ENDCLIM PARAMETER. Default time is UTC
+        e.g. startclim=06011800 Do not specify a year.
+    endclim: string, optional
+        End date in form of MMDDhhmm. MUST BE USED WITH THE STARTCLIM PARAMETER. Default time is UTC
+        e.g. endclim=06011800 Do not specify a year.
+    obtimezone: string, optional
+        Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
+    showemptystations: string, optional
+        Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
+        omitted by default.
+    stid: string, optional
+        Single or comma separated list of MesoWest station IDs. e.g. stid='kden,kslc,wbb'
+    county: string, optional
+        County/parish/borough (US/Canada only), full name e.g. county='Larimer'
+    state: string, optional
+        US state, 2-letter ID e.g. state='CO'.
+    country: string, optional
+        Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
+    radius: string, optional
+        Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
+    bbox: string, optional
+        Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+    cwa: string, optional
+        NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
+    nwsfirezone: string, optional
+        NWS Fire Zone e.g. nwsfirezone='LOX241'
+    gacc: string, optional
+        Name of Geographic Area Coordination Center e.g. gacc='EBCC' See http://gacc.nifc.gov/ for a list of GACCs.
+    subgacc: string, optional
+        Name of Sub GACC e.g. subgacc='EB07'
+    vars: string, optional
+        Single or comma separatd list of sensor variables. Will return all stations that match one of provided
+        variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
+        the query. e.g. vars='wind_speed,pressure' Use the variables method to see a list of sensor vars.
+    units: string, optional
+        String or set of strings and pipes separated by commas. Default is metric units. Set units='ENGLISH' for
+        FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
+        speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
+        alti|inhg. e.g. units='temp|F,speed|kph,metric'
+    groupby: string, optional
+        Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
+        e.g. groupby='state'
+
+    Returns:
+        Dictionary of aggregated statistics through the _get_response() method.
+
+    Raises:
+        None.
+    """
+
+    self._check_geo_param(kwargs)
+    kwargs['start'] = start
+    kwargs['end'] = end
+    kwargs['token'] = self.api_token
+
+    return self._get_response('stations/statistics', kwargs)
 
 
+def metadata_query(self, **kwargs):
+    r"""
+    Returns a dictionary describing the metadata for a station or stations
+    (stid's separated by commmas). Returns (in order) station status,
+    mnet_id, elevation, station name, shortname, SGID, nwsfirezone, stid,
+    longitude, county, CWA, state, nwszone, latitude, timezone, country, ID.
+
+    Usage: x = r.metadata_query(stid='stid')
+
+    Arguments:
+    ----------
+    complete: integer, optional
+        A value of 1 or 0. When set to 1 an extended list of
+        metadata attributes for each returned station is provided.
+        This result is useful for exploring the zones and regions in which
+        a station resides. Default is complete = 1.
+    obtimezone: string, optional
+        Set to either UTC or local. Sets timezone of obs. Default is UTC. e.g. obtimezone='local'.
+    showemptystations: string, optional
+        Set to '1' to show stations even if no obs exist that match the time period. Stations without obs are
+        omitted by default.
+    stid: string, optional
+        Single or comma separated list of MesoWest station IDs. e.g. stid='kden,kslc,wbb'
+    county: string, optional
+        County/parish/borough (US/Canada only), full name e.g. county='Larimer'
+    state: string, optional
+        US state, 2-letter ID e.g. state='CO'.
+    country: string, optional
+        Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
+    radius: string, optional
+        Distance from a lat/lon pt as [lat,lon,radius (mi)]e.g. radius=[-120,40,20]
+    bbox: string, optional
+        Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+    cwa: string, optional
+        NWS county warning area e.g. cwa='LOX' See http://www.nws.noaa.gov/organization.php for CWA list
+    nwsfirezone: string, optional
+        NWS Fire Zone e.g. nwsfirezone='LOX241'
+    gacc: string, optional
+        Name of Geographic Area Coordination Center e.g. gacc='EBCC' See http://gacc.nifc.gov/ for a list of GACCs.
+    subgacc: string, optional
+        Name of Sub GACC e.g. subgacc='EB07'
+    vars: string, optional
+        Single or comma separatd list of sensor variables. Will return all stations that match one of provided
+        variables. Useful for filtering all stations that sense only certain vars. Do not request vars twice in
+        the query. e.g. vars='wind_speed,pressure' Use the variables method to see a list of sensor vars.
+    status: string, optional
+        A value of either active or inactive returns stations currently set as active or inactive in the archive.
+        Omitting this param returns all stations. e.g. status='active'
+    units: string, optional
+        String or set of strings and pipes separated by commas. Default is metric units. Set units='ENGLISH' for
+        FREEDOM UNITS ;) Valid  other combinations are as follows: temp|C, temp|F, temp|K; speed|mps, speed|mph,
+        speed|kph, speed|kts; pres|pa, pres|mb; height|m, height|ft; precip|mm, precip|cm, precip|in; alti|pa,
+        alti|inhg. e.g. units='temp|F,speed|kph,metric'
+    groupby: string, optional
+        Results can be grouped by key words: state, county, country, cwa, nwszone, mwsfirezone, gacc, subgacc
+        e.g. groupby='state'
+    """
+
+    self._check_geo_param(kwargs)
+    kwargs['token'] = self.api_token
+
+    return self._get_response('stations/metadata', kwargs)
 
 
+def latency_query(self, start, end, **kwargs):
+    r"""
+    Returns a dictionary of data latency values for a station or set of
+    stations based on a start and end date/time.
+    """
 
+    self._check_geo_param(kwargs)
+    kwargs['start'] = start
+    kwargs['end'] = end
+    kwargs['token'] = self.api_token
+
+    return self._get_response('stations/latency', kwargs)
+
+
+def mw_network(self, **kwargs):
+
+    """This function will return the network of the MesoWest network ID(s) entered.
+
+    Documentation for all MesoWest Networks can be found
+    at: http://mesowest.utah.edu/cgi-bin/droman/mnet_no.cgi
+
+    Usage: x = r.network_query(id='id',shortname='shortname')
+
+    Arguments: one of the two following is required
+    ----------
+    id: string
+        A single or comma-separated list of MesoNet categories
+        e.g.: net_ids='1,2,3'
+    shortname: string
+        A single or comma-separated list of abbreviations or short names
+        for networks, e.g: shortname = 'raws,nws/faa'
+
+    Returns:
+        Dictionary of network descriptions through the get_response() method.
+
+    Raises:
+        None.
+    """
+#        kwargs['net_id'] = net_id
+#        kwargs['shortname'] = shortname
+#        kwargs['longname'] = longname
+    kwargs['token'] = self.api_token
+
+    return self._get_response('networks', kwargs)
+
+
+def mnet_category(self, **kwargs):
+    """This function will return the network description of the MesoNet
+    categories entered.
+
+    MesoNet Network Types:
+        +----+--------+------------------------------+
+        | ID | NAME   | DESCRIPTION                  |
+        +----+--------+------------------------------+
+        |  1 | AG     | Agricultural                 |
+        |  2 | AQ     | Air Quality                  |
+        |  3 | EXT    | Offshore, CA, MX             |
+        |  4 | FED+   | Federal and state networks   |
+        |  5 | HYDRO  | Hydrological                 |
+        |  6 | LOCAL  | Commercial, state, and local |
+        |  7 | NWS    | NWS/FAA                      |
+        |  8 | PUBLIC | CWOP                         |
+        |  9 | RAWS   | Fire weather                 |
+        | 10 | TRANS  | Road and rail weather        |
+        +----+--------+------------------------------+
+
+
+    Usage: x = r.network_query(type_ids)
+
+    Arguments:
+    ----------
+    id: string, mandatory
+        A single or comma-separated list of MesoNet categories
+        e.g.: type_ids='1,2,3'
+
+    Returns:
+        Dictionary of variables through the get_response() method.
+
+    Raises:
+        None.
+    """
+
+    kwargs['token'] = self.api_token
+
+    return self._get_response('networktypes', kwargs)
 
