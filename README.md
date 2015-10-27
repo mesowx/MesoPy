@@ -5,7 +5,7 @@
 [![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](http://mesopy.readthedocs.org/en/latest/)
 [![PyPI](https://img.shields.io/pypi/dm/MesoPy.svg)](https://pypi.python.org/pypi/MesoPy)
 
-MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
+MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API which is updated daily with over  It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and I would like feedback on how you are using MesoPy!
 
 ## Requirements
 MesoPy requires [requests] `pip install requests` because of it's voodoo powers in making API calls for us. 
@@ -74,7 +74,13 @@ Whenever the data you're requesting returns `['STATION']`, it is necessary to sp
 3. `timeseries_obs()` - Retrieve observations over a specified period for a station(s)
 4. `climatology_obs()` - Obtain a climatology over a specified period for a station(s)
 5. `station_list()` - Retrieve a list of stations based on search parameters
-6. `variable_list()` - Retrieve a list of sensor variables possible for observing stations 
+6. `variable_list()` - Retrieve a list of sensor variables possible for observing stations
+7. `climate_stats()` - Retrieve aggregated yearly climate statistics for a station(s)
+8. `discrete_state()` - Obtain statistics for a specific timeframe for a station(s)
+9. `metadata_query()` - Get a description of all metadata pertaining to a station(s)
+10. `latency_query()` - Retrieve data latency values for a station(s)
+11. `network_query()` - Obtain network descriptions for a specified network ID(s) 
+12. `networktypes_query()` - Returns the network types for a specified network ID(s)
 
 ## Documentation
 Full documentation can be found by clicking the below badge:
@@ -85,17 +91,13 @@ Full documentation can be found by clicking the below badge:
 These can be found in the `/examples` path.
 
 ## Version and License
-1.1.2 released on 11 Jul 2015 under the MIT license
+2.0.0 released on 27 Oct 2015 under the MIT license
 
 ## Support and Credits
-MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [joclark@ucar.edu]. MesoWest has originally created by Dr. John Horel's [research group] at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
+MesoPy was designed to be as simple as possible and I hope you enjoy its usage. If you have any questions/comments, please direct them to [joshua.m.clark@utah.edu]. MesoWest has originally created by Dr. John Horel's [research group] at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
 
 [requests]:https://pypi.python.org/pypi/requests/
 [here]: http://mesowest.org/api/signup/
-[joclark@ucar.edu]: mailto:joclark@ucar.edu
+[joshua.m.clark@utah.edu]: mailto:joshua.m.clark@utah.edu
 [research group]: http://meso1.chpc.utah.edu/mesowest_overview/
 [Western Region]: http://www.wrh.noaa.gov/
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jclark754/mesopy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
