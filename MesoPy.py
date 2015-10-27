@@ -56,12 +56,14 @@ class Meso(object):
         Arguments:
         ----------
         api_token: string, mandatory
-            Your API token that authenticates you for requests against MesoWest.
+            Your API token that authenticates you for requests against MesoWest.mes
 
         Returns:
+        --------
             None.
 
         Raises:
+        -------
             None.
         """
 
