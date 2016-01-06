@@ -22,7 +22,7 @@ def main():
     # pp = pprint.PrettyPrinter(indent=2)
 
     # Create instance of Meso object, pass in YOUR token
-    m = Meso(api_token='3428e1e281164762870915d2ae6781b4')
+    m = Meso(token='3428e1e281164762870915d2ae6781b4')
 
     # Use to lookup stations, could specify counties or whatever here
     # findstationids = m.station_list(state='CO')
@@ -31,7 +31,7 @@ def main():
     # Grab most recent temp (F) ob in last 90 min at each of the below stations
     stations = ['kgxy, kccu, kcos, kden, kgjt, kbdu, kpub, klhx, kspd, kdro, ksbs, keeo, kguc, klic, '
                 'kstk, kals, ktad']
-    latest = m.latest_obs(stid=stations, within='90', vars='air_temp', units='temp|F')
+    latest = m.latest(stid=stations, within='90', vars='air_temp', units='temp|F')
 
     # create a list to store everything, iterate over the number of objs returned in latest and append
     # lat, long, temp, and stid for use later
