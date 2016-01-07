@@ -20,11 +20,15 @@
 # ==================================================================================================================== #
 
 try:
-    # noinspection PyUnresolvedReferences
-    from requests import get, exceptions
-
+    import urllib.parse
+    import urllib.request
+    import urllib.error
 except ImportError:
-    raise Exception("MesoPy requires the 'requests' library to work")
+    import urllib2
+    import urllib
+
+import json
+
 
 # ==================================================================================================================== #
 # MesoPyError class                                                                                                    #
@@ -98,8 +102,8 @@ class Meso(object):
         """
 
         results_error = 'No results were found matching your query'
-        auth_error = 'The token or API key is not valid, please contact Josh Clark at jclark754@gmail.com to resolve ' \
-                     'this'
+        auth_error = 'The token or API key is not valid, please contact Josh Clark at joshua.m.clark@utah.edu to ' \
+                     'resolve this'
         rule_error = 'This request violates a rule of the API. Please check the guidelines for formatting a data ' \
                      'request and try again'
         catch_error = 'Something went wrong. Check all your calls and try again'
@@ -139,21 +143,23 @@ class Meso(object):
             long and redirect_error is shown if the url is formatted incorrectly.
 
         """
-        connection_error = 'Could not connect to the API. Please check your connection'
-        timeout_error = 'Connection Timeout, please retry later'
-        redirect_error = 'Bad URL, check the formatting of your request and try again'
-
+        http_error = 'Could not connect to the API. This could be because you have no internet connection, a parameter' \
+                     ' was input incorrectly, or the API is currently down. Please try again.'
+        # For python 3.4
         try:
-            resp = get(self.base_url + endpoint, params=request_dict)
-            return self._checkresponse(resp.json())
-        except exceptions.ConnectionError:
-            raise MesoPyError(connection_error)
-        except exceptions.Timeout:
-            raise MesoPyError(timeout_error)
-        except exceptions.TooManyRedirects:
-            raise MesoPyError(redirect_error)
-        except exceptions.RequestException as e:
-            raise e
+            qsp = urllib.parse.urlencode(request_dict)
+            resp = urllib.request.urlopen(self.base_url + endpoint + '?' + qsp).read()
+            return self._checkresponse(json.loads(resp.decode('utf-8')))
+        # For python 2.7
+        except AttributeError or NameError:
+            try:
+                qsp = urllib.urlencode(request_dict)
+                resp = urllib2.urlopen(self.base_url + endpoint + '?' + qsp).read()
+                return self._checkresponse(json.loads(resp.decode('utf-8')))
+            except urllib2.URLError:
+                raise MesoPyError(http_error)
+        except urllib.error.URLError:
+            raise MesoPyError(http_error)
 
     def _check_geo_param(self, arg_list):
         r""" Checks each function call to make sure that the user has provided at least one of the following geographic
@@ -208,10 +214,10 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
-        bbox: list, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+        radius: string, optional
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -279,10 +285,10 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
-        bbox: list, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+        radius: string, optional
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -354,9 +360,9 @@ class Meso(object):
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
         radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
         bbox: list, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -429,10 +435,10 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
-        bbox: list, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+        radius: string, optional
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -504,10 +510,10 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
-        bbox: list, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+        radius: string, optional
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
+        bbox: string, optional
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -607,10 +613,10 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
+        radius: string, optional
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
         bbox: string, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -688,9 +694,9 @@ class Meso(object):
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
         radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
         bbox: string, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -762,10 +768,10 @@ class Meso(object):
             US state, 2-letter ID e.g. state='CO'
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
-        radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
+        radius: string, optional
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
         bbox: string, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -838,9 +844,9 @@ class Meso(object):
         country: string, optional
             Single or comma separated list of abbreviated 2 or 3 character countries e.g. country='us,ca,mx'
         radius: list, optional
-            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius=[-120,40,20]
+            Distance from a lat/lon pt or stid as [lat,lon,radius (mi)] or [stid, radius (mi)]. e.g. radius="-120,40,20"
         bbox: string, optional
-            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox=[-120,40,-119,41]
+            Stations within a [lon/lat] box in the order [lonmin,latmin,lonmax,latmax] e.g. bbox="-120,40,-119,41"
         cwa: string, optional
             NWS county warning area. See http://www.nws.noaa.gov/organization.php for CWA list. e.g. cwa='LOX'
         nwsfirezone: string, optional
@@ -937,37 +943,30 @@ class Meso(object):
 
         return self._get_response('networktypes', kwargs)
 
-    # Leaving off qctypes until I get the qctypes response to give response code/msg
+        # Leaving off qctypes until I get the qctypes response to give response code/msg
 
-    # def qc_types(self, **kwargs):
-    #     r""" Returns the quality control and internal consistency test types used by MesoWest. These include MesoWest
-    #     checks and MADIS checks. Leaving this blank will return all QC types.
-    #
-    #     Arguments:
-    #     ----------
-    #     id: string, optional
-    #         A single or comma-separated list of test ids. e.g. id='1,2,3'
-    #     shortname: string, optional
-    #         A single or comma-separated list of MesoWest QC/IC test shortnames. e.g. shortname='mw_range_check'
-    #
-    #
-    #     Returns:
-    #     --------
-    #         Dictionary of QC types.
-    #
-    #     Raises:
-    #     -------
-    #         None.
-    #
-    #     """
-    #
-    #     kwargs['token'] = self.token
-    #
-    #     return self._get_response('qctypes', kwargs)
-
-
-
-
-
-
-
+        # def qc_types(self, **kwargs):
+        #     r""" Returns the quality control and internal consistency test types used by MesoWest. These include MesoWest
+        #     checks and MADIS checks. Leaving this blank will return all QC types.
+        #
+        #     Arguments:
+        #     ----------
+        #     id: string, optional
+        #         A single or comma-separated list of test ids. e.g. id='1,2,3'
+        #     shortname: string, optional
+        #         A single or comma-separated list of MesoWest QC/IC test shortnames. e.g. shortname='mw_range_check'
+        #
+        #
+        #     Returns:
+        #     --------
+        #         Dictionary of QC types.
+        #
+        #     Raises:
+        #     -------
+        #         None.
+        #
+        #     """
+        #
+        #     kwargs['token'] = self.token
+        #
+        #     return self._get_response('qctypes', kwargs)

@@ -10,7 +10,7 @@ def testvars():
 
 
 def testmetadata():
-    stations = m.metadata(bbox=[-120,40,-119,41])
+    stations = m.metadata(bbox="-120,40,-119,41")
     ok_(stations)
 
 
@@ -32,8 +32,8 @@ def testprecip():
 # Miscellaneous Tests
 
 def testlateststrlist():
-    latest = m.latest(stid=['kfnl','kden','ksdf'], within='30')
-    eq_(len(latest['STATION']), 1)
+    latest = m.latest(stid="kfnl,kden,ksdf", within='90')
+    eq_(len(latest['STATION']), 3)
 
 
 # Error Handling
