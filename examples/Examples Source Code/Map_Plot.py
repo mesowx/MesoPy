@@ -22,7 +22,7 @@ def main():
     # pp = pprint.PrettyPrinter(indent=2)
 
     # Create instance of Meso object, pass in YOUR token
-    m = Meso(token='3428e1e281164762870915d2ae6781b4')
+    m = Meso(token='YOUR TOKEN')
 
     # Use to lookup stations, could specify counties or whatever here
     # findstationids = m.station_list(state='CO')

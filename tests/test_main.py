@@ -10,8 +10,8 @@ def testvars():
 
 
 def testmetadata():
-    stations = m.metadata(state='CO', county='Larimer')
-    ok_('KFNL' == stations['STATION'][1]['STID'])
+    stations = m.metadata(bbox=[-120,40,-119,41])
+    ok_(stations)
 
 
 def testtimeseries():

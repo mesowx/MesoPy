@@ -11,7 +11,7 @@ import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
 # Instance a Meso object by passing in YOUR api_token
-m = Meso(token='ian')
+m = Meso(token='YOUR TOKEN')
 # Fetches the latest obs for Boulder airport within 30 min of now
 latest = m.latest(stid='kbdu', within='30', units='ENGLISH')
 pp.pprint(latest)
@@ -29,7 +29,7 @@ print(result)
 pp = pprint.PrettyPrinter(indent=2)
 
 # Instance a Meso object by passing in YOUR api_token
-m = Meso(token='ian') # this token for testing only
+m = Meso(token='YOUR TOKEN') # this token for testing only
 
 # Here we retrieve only the stations in Larimer County, Colorado
 stations = m.metadata(state='CO', county='Larimer')
