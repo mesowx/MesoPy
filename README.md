@@ -1,7 +1,6 @@
 # MesoPy
 [![Build Status](https://travis-ci.org/mesowx/MesoPy.svg?branch=master)](https://travis-ci.org/mesowx/MesoPy)
 [![Coverage Status](https://coveralls.io/repos/mesowx/MesoPy/badge.svg?branch=master&service=github)](https://coveralls.io/github/mesowx/MesoPy?branch=master)
-[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](http://mesopy.readthedocs.org/en/latest/)
 [![PyPI](https://img.shields.io/pypi/dm/MesoPy.svg)](https://pypi.python.org/pypi/MesoPy)
 
 MesoPy is a small pure python wrapper around the MesoWest (http://mesowest.utah.edu/) API which is updated daily with over 4.5 million observations. It is useful for retrieving meteorological data at over 40,000 observation stations in the United States. This project was created with the researcher in mind and we would value feedback on how you are using MesoPy!
@@ -84,9 +83,7 @@ Whenever the data you're requesting returns `['STATION']`, it is necessary to sp
 12. `networktypes()` - Returns the network categories for the observing networks
 
 ## Documentation
-Full documentation can be found by clicking the below badge:
-
-[![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](http://mesopy.readthedocs.org/en/latest/)
+Each function is **well** documented in the docstrings. In an interactive interpreter, simply type `help(SOME_FUNC)` or in your code, type `SOME_FUNC.__doc__` 
 
 ## Example Projects 
 These can be found in the `/examples` path.
