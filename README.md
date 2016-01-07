@@ -1,6 +1,6 @@
 # MesoPy
 [![Build Status](https://travis-ci.org/mesowx/MesoPy.svg?branch=master)](https://travis-ci.org/mesowx/MesoPy)
-[![Coverage Status](https://coveralls.io/repos/jclark754/MesoPy/badge.svg?branch=master)](https://coveralls.io/r/jclark754/MesoPy?branch=master)
+[![Coverage Status](https://coveralls.io/repos/mesowx/MesoPy/badge.svg?branch=master&service=github)](https://coveralls.io/github/mesowx/MesoPy?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/mesopy/badge/?version=latest)](http://mesopy.readthedocs.org/en/latest/)
 [![PyPI](https://img.shields.io/pypi/dm/MesoPy.svg)](https://pypi.python.org/pypi/MesoPy)
 
