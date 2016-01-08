@@ -18,6 +18,8 @@ There are two easy ways to install MesoPy:
 - Function names have been simplified
 - Additional query parameters have been added to each function
 - New functions added to request more services from MesoWest (data latency, statistics, network information)
+- Built-in pretty printing for JSON response
+- Lists may be passed to parameters
 
 ## Usage
 #### Retrieving data:
@@ -89,7 +91,7 @@ Each function is **well** documented in the docstrings. In an interactive interp
 These can be found in the `/examples` path.
 
 ## Version and License
-2.0.0 released on 6 Jan 2016 under the MIT license
+2.0.1 released on 7 Jan 2016 under the MIT license
 
 ## Support and Credits
 MesoPy was designed to be as simple as possible and we hope you enjoy its usage. If you have any questions/comments, please direct them to [joshua.m.clark@utah.edu]. The [MesoWest group] is led by  Dr. John Horel at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
