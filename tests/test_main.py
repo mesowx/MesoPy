@@ -10,7 +10,7 @@ def testvars():
 
 
 def testmetadata():
-    stations = m.metadata(bbox="-120,40,-119,41")
+    stations = m.metadata(radius=['wbb', 5])
     ok_(stations)
 
 
@@ -25,7 +25,7 @@ def testclimatology():
 
 
 def testprecip():
-    precip = m.precip(stid='kfnl', start='201504261800', end='201504271200', units='precip|in')
+    precip = m.precip(stid=['kfnl', 'ksdf'], start='201504261800', end='201504271200', units='precip|in')
     ok_(precip)
 
 def testclimatestats():
@@ -55,7 +55,7 @@ def testattime():
 # Miscellaneous Tests
 
 def testlateststrlist():
-    latest = m.latest(stid="kfnl,kden,ksdf", within='90')
+    latest = m.latest(stid=['kfnl', 'kden', 'ksdf'], within='90')
     eq_(len(latest['STATION']), 3)
 
 # Error Handling

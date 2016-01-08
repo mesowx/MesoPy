@@ -147,19 +147,20 @@ class Meso(object):
                      ' was input incorrectly, or the API is currently down. Please try again.'
         # For python 3.4
         try:
-            qsp = urllib.parse.urlencode(request_dict)
+            qsp = urllib.parse.urlencode(request_dict, doseq=True)
             resp = urllib.request.urlopen(self.base_url + endpoint + '?' + qsp).read()
-            return self._checkresponse(json.loads(resp.decode('utf-8')))
+
         # For python 2.7
         except AttributeError or NameError:
             try:
-                qsp = urllib.urlencode(request_dict)
+                qsp = urllib.urlencode(request_dict, doseq=True)
                 resp = urllib2.urlopen(self.base_url + endpoint + '?' + qsp).read()
-                return self._checkresponse(json.loads(resp.decode('utf-8')))
             except urllib2.URLError:
                 raise MesoPyError(http_error)
         except urllib.error.URLError:
             raise MesoPyError(http_error)
+        resp = self._checkresponse(json.loads(resp.decode('utf-8')))
+        return json.dumps(resp, sort_keys=True, indent=4)
 
     def _check_geo_param(self, arg_list):
         r""" Checks each function call to make sure that the user has provided at least one of the following geographic
