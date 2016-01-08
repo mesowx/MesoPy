@@ -159,8 +159,7 @@ class Meso(object):
                 raise MesoPyError(http_error)
         except urllib.error.URLError:
             raise MesoPyError(http_error)
-        resp = self._checkresponse(json.loads(resp.decode('utf-8')))
-        return json.dumps(resp, sort_keys=True, indent=4)
+        return self._checkresponse(json.loads(resp.decode('utf-8')))
 
     def _check_geo_param(self, arg_list):
         r""" Checks each function call to make sure that the user has provided at least one of the following geographic

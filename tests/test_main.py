@@ -56,6 +56,7 @@ def testattime():
 
 def testlateststrlist():
     latest = m.latest(stid=['kfnl', 'kden', 'ksdf'], within='90')
+    print(latest)
     eq_(len(latest['STATION']), 3)
 
 # Error Handling
