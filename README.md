@@ -97,6 +97,5 @@ MesoPy was designed to be as simple as possible and we hope you enjoy its usage.
 
 [requests]:https://pypi.python.org/pypi/requests/
 [here]: http://mesowest.org/api/signup/
-[joshua.m.clark@utah.edu]: mailto:joshua.m.clark@utah.edu
 [MesoWest group]: http://meso1.chpc.utah.edu/mesowest_overview/
 [Western Region]: http://www.wrh.noaa.gov/
