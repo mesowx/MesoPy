@@ -93,7 +93,7 @@ These can be found in the `/examples` path.
 2.0.2 released on 7 Jan 2016 under the MIT license
 
 ## Support and Credits
-MesoPy was designed to be as simple as possible and we hope you enjoy its usage. If you have any questions/comments, please direct them to [support@mesowest.org]. The [MesoWest group] is led by  Dr. John Horel at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
+MesoPy was designed to be as simple as possible and we hope you enjoy its usage. If you have any questions/comments, please direct them to support@mesowest.org. The [MesoWest group] is led by  Dr. John Horel at the University of Utah. Additional facilities were provided by the [Western Region] of the National Weather Service. 
 
 [requests]:https://pypi.python.org/pypi/requests/
 [here]: http://mesowest.org/api/signup/
