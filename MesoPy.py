@@ -1,7 +1,7 @@
 # ==================================================================================================================== #
 # MesoPy                                                                                                               #
 # Version: 2.0.0                                                                                                       #
-# Copyright (c) 2015 MesoWest Developers <atmos-mesowest@lists.utah.edu>                                               #
+# Copyright (c) 2015-17 MesoWest Developers <atmos-mesowest@lists.utah.edu>                                            #
 #                                                                                                                      #
 # LICENSE:                                                                                                             #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated         #
@@ -658,7 +658,7 @@ class Meso(object):
         kwargs['endclim'] = endclim
         kwargs['token'] = self.token
 
-        return self._get_response('stations/statistics', kwargs)
+        return self._get_response('stations/climatology', kwargs)
 
     def time_stats(self, start, end, type, **kwargs):
         r""" Returns a dictionary of discrete time statistics (count, standard deviation, average, median, maximum,
