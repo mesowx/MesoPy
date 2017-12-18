@@ -59,6 +59,11 @@ def testlateststrlist():
     print(latest)
     eq_(len(latest['STATION']), 3)
 
+def testnostationsfound():
+    result = m.precip(stid='CDDT2', start='201712131200', end='201712141200')
+    print(result)
+    eq_(result, None)
+
 # Error Handling
 @raises(MesoPyError)
 def testbadurlstring():
