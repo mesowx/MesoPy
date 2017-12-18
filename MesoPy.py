@@ -111,6 +111,8 @@ class Meso(object):
         if response['SUMMARY']['RESPONSE_CODE'] == 1:
             return response
         elif response['SUMMARY']['RESPONSE_CODE'] == 2:
+            if response['SUMMARY']['NUMBER_OF_OBJECTS'] == 0:
+                return None
             raise MesoPyError(results_error)
         elif response['SUMMARY']['RESPONSE_CODE'] == 200:
             raise MesoPyError(auth_error)
