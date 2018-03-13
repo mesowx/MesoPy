@@ -31,28 +31,48 @@ precip = m.precip(stid='kfnl', start='201504261800', end='201504271200', units='
 ```
 
 This returns the following data as a dictionary.
-
-    { 'STATION': [ { 'ELEVATION': '5016',
-                            'ID': '192',
-                      'LATITUDE': '40.45',
-                     'LONGITUDE': '-105.01667',
-                       'MNET_ID': '1',
-                          'NAME': 'Fort Collins/Loveland, Fort Collins-Loveland '
-                                  'Municipal Airport',
-                  'OBSERVATIONS': { 'count_1': 6,
-                              'ob_end_time_1': '2015-04-27T00:55:00Z',
-                            'ob_start_time_1': '2015-04-26T18:55:00Z',
-                       'total_precip_value_1': 0.13,
-                                 'vids case4': ['39', '51', '40', '52']},
-                         'STATE': 'CO',
-                        'STATUS': 'ACTIVE',
-                          'STID': 'KFNL',
-                      'TIMEZONE': 'US/Mountain'}],
-     'SUMMARY': { 'METADATA_RESPONSE_TIME': '898.586988449 ms',
-                       'NUMBER_OF_OBJECTS': 1,
-                           'RESPONSE_CODE': 1,
-                        'RESPONSE_MESSAGE': 'OK',
-                              'TOTAL_TIME': '2027.99797058 ms'}}
+```json
+{  
+   "UNITS":{  
+      "precipitation":"Inches"
+   },
+   "STATION":[  
+      {  
+         "STATUS":"ACTIVE",
+         "MNET_ID":"1",
+         "PERIOD_OF_RECORD":{  
+            "start":"1970-01-01T00:00:00Z",
+            "end":"2018-03-13T01:56:00Z"
+         },
+         "ELEVATION":"5016",
+         "NAME":"Fort Collins\/Loveland - Northern Colorado Regional Airport",
+         "RESTRICTED":false,
+         "STID":"KFNL",
+         "ELEV_DEM":"5000",
+         "LONGITUDE":"-105.01667",
+         "STATE":"CO",
+         "OBSERVATIONS":{  
+            "ob_start_time_1":"2015-04-26T18:15:00Z",
+            "total_precip_value_1":0.09,
+            "ob_end_time_1":"2015-04-27T11:55:00Z",
+            "count_1":53
+         },
+         "LATITUDE":"40.45",
+         "TIMEZONE":"America\/Denver",
+         "ID":"192"
+      }
+   ],
+   "SUMMARY":{  
+      "DATA_QUERY_TIME":5.0201416016,
+      "RESPONSE_CODE":1,
+      "RESPONSE_MESSAGE":"OK",
+      "METADATA_RESPONSE_TIME":"0.0920295715332 ms",
+      "NUMBER_OF_OBJECTS":1,
+      "PRECIP_DATA_TIME":5.4969787598,
+      "DATA_PARSE_TIME":0.4601478577
+   }
+}
+```
 
 You can retrieve any of the dictionary keys/values listed above by merely doing the following:
 
@@ -64,7 +84,7 @@ print('The total accumulated precip at ' + station + ' was ' + str(totalPrecip) 
 ```
 Which prints:
 
-> The total accumulated precip at KFNL was 0.13"
+> The total accumulated precip at KFNL was 0.09"
 
 #####You should note one thing from the above example: 
 Whenever the data you're requesting returns `['STATION']`, it is necessary to specify which station (index value) in the list you will subsequently be referring to. For example if you pass in `stid=kden,kslc`, the dictionary will return a list of the two stations' relevant info. So to get to information on KDEN (Denver), you would type `['STATION'][0]` because KDEN would be first in the list of stations and `['STATION'][1]` for KSLC (Salt Lake City). Remember that `{}` specifies a dictionary and `[]` denotes a list and `[0]` is the first position in a list. It may be useful to store `precip['STATION'][i]` as a variable to reduce clutter. For example, `Denver_PrecipObs = precip['STATION'][0]`  and `SaltLake_PrecipObs = precip['STATION'][1]`. Then, you could write `print(Denver_PrecipObs['OBSERVATIONS']['total_precip_value_1'])` which returns `0.13` (for the above request). The API was created to always return a list (since a user can request multiple stations at any time) so this will always be a stipulation. 
